@@ -26,7 +26,7 @@ Senior DevSecOps Engineer • Cloud Solutions Architect • Infrastructure & Aut
 ## Current Projects
 
 - [keystone](https://github.com/dortort/keystone) — Open-source Electron app for AI-assisted software architecture (PRDs, TDDs, ADRs).
-- [agent-bound](https://github.com/dortort/agent-bound) — Access control framework for MCP servers with Android-style declarative permissions and least-privilege enforcement.
+- [agent-bound](https://github.com/dortort/agent-bound) — Access control framework for MCP servers with Android-style permissions.
 - [moovit-client](https://github.com/dortort/moovit-client) — TypeScript client library for Moovit public transit API (route planning, real-time arrivals, and location search).
 - [openclaw-mailguard](https://github.com/dortort/openclaw-mailguard) — OpenClaw plugin for email prompt-injection mitigation with gated tool access.
 - [openclaw-aws](https://github.com/dortort/openclaw-aws) — Infrastructure and deployment automation for OpenClaw on AWS.
