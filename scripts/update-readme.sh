@@ -11,6 +11,7 @@ THREE_MONTHS_AGO=$(date -u -d '3 months ago' +%Y-%m-%dT%H:%M:%SZ)
 PROJECT_LINES=""
 while IFS=$'\t' read -r name url desc; do
   if [ -n "$desc" ]; then
+    [[ "$desc" =~ [.!?]$ ]] || desc="$desc."
     PROJECT_LINES+="- [$name]($url) — $desc"$'\n'
   else
     PROJECT_LINES+="- [$name]($url)"$'\n'
