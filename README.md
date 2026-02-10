@@ -26,22 +26,25 @@ Senior DevSecOps Engineer • Cloud Solutions Architect • Infrastructure & Aut
 ## Current Projects
 
 <!-- CURRENT_PROJECTS_START -->
-- [keystone](https://github.com/dortort/keystone) — Open-source Electron app for AI-assisted software architecture (PRDs, TDDs, ADRs).
 - [agent-bound](https://github.com/dortort/agent-bound) — Access control framework for MCP servers with Android-style permissions.
+- [openclaw-aws](https://github.com/dortort/openclaw-aws) — Infrastructure and deployment automation for OpenClaw on AWS.
+- [keystone](https://github.com/dortort/keystone) — Open-source Electron app for AI-assisted software architecture (PRDs, TDDs, ADRs).
 - [moovit-client](https://github.com/dortort/moovit-client) — TypeScript client library for Moovit public transit API (route planning, real-time arrivals, and location search).
 - [openclaw-mailguard](https://github.com/dortort/openclaw-mailguard) — OpenClaw plugin for email prompt-injection mitigation with gated tool access.
-- [openclaw-aws](https://github.com/dortort/openclaw-aws) — Infrastructure and deployment automation for OpenClaw on AWS.
 <!-- CURRENT_PROJECTS_END -->
 
 ## Latest Writing
 
 <!-- LATEST_WRITING_START -->
-- 2026-01-08 — [Runtime Contract Tests With dgoss](https://dortort.com/posts/2026/01/08/runtime-contract-tests-with-dgoss.html)
-- 2025-06-04 — [Gitflow vs. Trunk Based Development: A Realistic Terraform Strategy](https://dortort.com/posts/2025/06/04/terraform-strategy-gitflow-vs-trunk-based.html)
-- 2025-05-06 — [Modernizing Scheduled Tasks with AWS: A Better Alternative to Cron Jobs](https://dortort.com/posts/2025/05/06/building-serverless-cron-on-aws.html)
-- 2025-04-03 — [Serverless PCI: Reducing Payment Compliance Scope the Smart Way](https://dortort.com/posts/2025/04/03/serverless-pci-dss-scope-reduction.html)
-- 2025-03-04 — [Terraform at Scale: Structuring for Multi-Environment Microservice Architectures](https://dortort.com/posts/2025/03/04/structuring-terraform-for-multi-environment-microservice-architectures.html)
-- 2025-01-15 — [Idempotent Dockerfiles: Building for Repeatability and Reliability](https://dortort.com/posts/2025/01/15/idempotent-dockerfiles.html)
+- 2026-01-08 — [dgoss: Testing the Container, Not Just the Image](https://dortort.com/posts/2026/01/08/runtime-contract-tests-with-dgoss.html)
+- 2025-08-04 — [A Practical Guide to Terraform Dependency Management](https://dortort.com/posts/2025/08/04/terraform-version-constraints.html)
+- 2025-07-02 — [Stop Scripting, Start Architecting: The OOP Approach to Terraform](https://dortort.com/posts/2025/07/02/stop-scripting-start-architecting-terraform-oop.html)
+- 2025-06-04 — [Why GitFlow Fails at Infrastructure](https://dortort.com/posts/2025/06/04/terraform-strategy-gitflow-vs-trunk-based.html)
+- 2025-05-06 — [Modernizing Scheduled Tasks: Reliability, Scale, and Zero Maintenance](https://dortort.com/posts/2025/05/06/building-serverless-cron-on-aws.html)
+- 2025-04-03 — [How Serverless Shrinks PCI Scope](https://dortort.com/posts/2025/04/03/serverless-pci-dss-scope-reduction.html)
+- 2025-03-04 — [Terraform at Scale: Folders, Workspaces, or Services?](https://dortort.com/posts/2025/03/04/structuring-terraform-for-multi-environment-microservice-architectures.html)
+- 2025-02-10 — [Kubernetes vs. Proprietary Container Services: A Technical and Pragmatic Comparison](https://dortort.com/posts/2025/02/10/kubernetes-vs-proprietary-container-services.html)
+- 2025-01-15 — [Idempotent Dockerfiles: Desirable Ideal or Misplaced Objective?](https://dortort.com/posts/2025/01/15/idempotent-dockerfiles.html)
 <!-- LATEST_WRITING_END -->
 
 ## GitHub Activity
