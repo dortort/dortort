@@ -71,17 +71,12 @@ for dir in "$BLOG_DIR/_posts" "$BLOG_DIR/content/posts" "$BLOG_DIR/content/post"
 
     [ -z "$date_val" ] || [ -z "$title" ] && continue
 
-    # Build URL from date parts and filename slug
-    year=${date_val%%-*}
-    rest=${date_val#*-}
-    month=${rest%%-*}
-    day=${rest#*-}
-
+    # Build URL from filename slug
     bn=$(basename "$file")
     slug="${bn#[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]-}"
     slug="${slug%.md}" ; slug="${slug%.markdown}" ; slug="${slug%.html}"
 
-    url="https://dortort.com/posts/$year/$month/$day/$slug.html"
+    url="https://dortort.com/posts/$slug/"
     POSTS+=("$date_val|$title|$url")
   done < <(find "$dir" -type f \( -name '*.md' -o -name '*.markdown' \))
 done
