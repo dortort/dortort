@@ -27,6 +27,7 @@ Senior DevSecOps Engineer • Cloud Solutions Architect • Infrastructure & Aut
 ## Current Projects
 
 <!-- CURRENT_PROJECTS_START -->
+- [dgossgen](https://github.com/dortort/dgossgen)
 - [gemini-actions](https://github.com/dortort/gemini-actions) — A collection of GitHub Actions powered by Google Gemini that automate repository workflows.
 - [agent-bound](https://github.com/dortort/agent-bound) — Access control framework for MCP servers with Android-style permissions.
 - [openclaw-aws](https://github.com/dortort/openclaw-aws) — Infrastructure and deployment automation for OpenClaw on AWS.
@@ -38,15 +39,15 @@ Senior DevSecOps Engineer • Cloud Solutions Architect • Infrastructure & Aut
 ## Latest Writing
 
 <!-- LATEST_WRITING_START -->
-- 2026-01-08 — [dgoss: Testing the Container, Not Just the Image](https://dortort.com/posts/2026/01/08/runtime-contract-tests-with-dgoss.html)
-- 2025-08-04 — [A Practical Guide to Terraform Dependency Management](https://dortort.com/posts/2025/08/04/terraform-version-constraints.html)
-- 2025-07-02 — [Stop Scripting, Start Architecting: The OOP Approach to Terraform](https://dortort.com/posts/2025/07/02/stop-scripting-start-architecting-terraform-oop.html)
-- 2025-06-04 — [Why GitFlow Fails at Infrastructure](https://dortort.com/posts/2025/06/04/terraform-strategy-gitflow-vs-trunk-based.html)
-- 2025-05-06 — [Modernizing Scheduled Tasks: Reliability, Scale, and Zero Maintenance](https://dortort.com/posts/2025/05/06/building-serverless-cron-on-aws.html)
-- 2025-04-03 — [How Serverless Shrinks PCI Scope](https://dortort.com/posts/2025/04/03/serverless-pci-dss-scope-reduction.html)
-- 2025-03-04 — [Terraform at Scale: Folders, Workspaces, or Services?](https://dortort.com/posts/2025/03/04/structuring-terraform-for-multi-environment-microservice-architectures.html)
-- 2025-02-10 — [Kubernetes vs. Proprietary Container Services: A Technical and Pragmatic Comparison](https://dortort.com/posts/2025/02/10/kubernetes-vs-proprietary-container-services.html)
-- 2025-01-15 — [Idempotent Dockerfiles: Desirable Ideal or Misplaced Objective?](https://dortort.com/posts/2025/01/15/idempotent-dockerfiles.html)
+- 2026-01-08 — [dgoss: Testing the Container, Not Just the Image](https://dortort.com/posts/runtime-contract-tests-with-dgoss/)
+- 2025-08-04 — [A Practical Guide to Terraform Dependency Management](https://dortort.com/posts/terraform-version-constraints/)
+- 2025-07-02 — [Stop Scripting, Start Architecting: The OOP Approach to Terraform](https://dortort.com/posts/stop-scripting-start-architecting-terraform-oop/)
+- 2025-06-04 — [Why GitFlow Fails at Infrastructure](https://dortort.com/posts/terraform-strategy-gitflow-vs-trunk-based/)
+- 2025-05-06 — [Modernizing Scheduled Tasks: Reliability, Scale, and Zero Maintenance](https://dortort.com/posts/building-serverless-cron-on-aws/)
+- 2025-04-03 — [How Serverless Shrinks PCI Scope](https://dortort.com/posts/serverless-pci-dss-scope-reduction/)
+- 2025-03-04 — [Terraform at Scale: Folders, Workspaces, or Services?](https://dortort.com/posts/structuring-terraform-for-multi-environment-microservice-architectures/)
+- 2025-02-10 — [Kubernetes vs. Proprietary Container Services: A Technical and Pragmatic Comparison](https://dortort.com/posts/kubernetes-vs-proprietary-container-services/)
+- 2025-01-15 — [Idempotent Dockerfiles: Desirable Ideal or Misplaced Objective?](https://dortort.com/posts/idempotent-dockerfiles/)
 <!-- LATEST_WRITING_END -->
 
 ## GitHub Activity
