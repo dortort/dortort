@@ -24,6 +24,7 @@ done < <(
       and .pushed_at > \"$THREE_MONTHS_AGO\"
       and .name != \"dortort\"
       and .name != \"dortort.github.io\"
+      and .name != \"homebrew-tap\"
     ) | [.name, .html_url, (.description // \"\")] | @tsv"
 )
 
