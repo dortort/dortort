@@ -91,6 +91,7 @@ fi
 
 # ── Update README ─────────────────────────────────────────────────
 
+PROJECT_LINES=$(printf '%s' "$PROJECT_LINES" | sort -f)
 PROJECT_LINES="${PROJECT_LINES%$'\n'}"
 WRITING_LINES="${WRITING_LINES%$'\n'}"
 
