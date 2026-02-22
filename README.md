@@ -40,6 +40,7 @@ Senior DevSecOps Engineer • Cloud Solutions Architect • Infrastructure & Aut
 ## Latest Writing
 
 <!-- LATEST_WRITING_START -->
+- 2026-02-21 — [Agentic AI is reintroducing ClickOps](https://dortort.com/posts/agentic-operations-clickops/)
 - 2026-01-08 — [dgoss: Testing the Container, Not Just the Image](https://dortort.com/posts/runtime-contract-tests-with-dgoss/)
 - 2025-08-04 — [A Practical Guide to Terraform Dependency Management](https://dortort.com/posts/terraform-version-constraints/)
 - 2025-07-02 — [Stop Scripting, Start Architecting: The OOP Approach to Terraform](https://dortort.com/posts/stop-scripting-start-architecting-terraform-oop/)
