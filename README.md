@@ -28,6 +28,7 @@ Senior DevSecOps Engineer • Cloud Solutions Architect • Infrastructure & Aut
 
 <!-- CURRENT_PROJECTS_START -->
 - [agent-bound](https://github.com/dortort/agent-bound) — Access control framework for MCP servers with Android-style permissions.
+- [ai-tool-guard](https://github.com/dortort/ai-tool-guard) — Policy enforcement middleware for Vercel AI SDK tool calls — guards, approvals, rate limiting, output filtering, and observability.
 - [dgossgen](https://github.com/dortort/dgossgen) — Generate dgoss container test suites from Dockerfiles via static analysis.
 - [gemini-actions](https://github.com/dortort/gemini-actions) — A collection of GitHub Actions powered by Google Gemini that automate repository workflows.
 - [keystone](https://github.com/dortort/keystone) — Open-source Electron app for AI-assisted software architecture (PRDs, TDDs, ADRs).
@@ -40,6 +41,7 @@ Senior DevSecOps Engineer • Cloud Solutions Architect • Infrastructure & Aut
 ## Latest Writing
 
 <!-- LATEST_WRITING_START -->
+- 2026-02-24 — [Don't Ditch AGENTS.md — Fix What's In It](https://dortort.com/posts/dont-ditch-agents-md-fix-whats-in-it/)
 - 2026-02-21 — [Agentic AI is reintroducing ClickOps](https://dortort.com/posts/agentic-operations-clickops/)
 - 2026-01-08 — [dgoss: Testing the Container, Not Just the Image](https://dortort.com/posts/runtime-contract-tests-with-dgoss/)
 - 2025-08-04 — [A Practical Guide to Terraform Dependency Management](https://dortort.com/posts/terraform-version-constraints/)
@@ -49,7 +51,6 @@ Senior DevSecOps Engineer • Cloud Solutions Architect • Infrastructure & Aut
 - 2025-04-03 — [How Serverless Shrinks PCI Scope](https://dortort.com/posts/serverless-pci-dss-scope-reduction/)
 - 2025-03-04 — [Terraform at Scale: Folders, Workspaces, or Services?](https://dortort.com/posts/structuring-terraform-for-multi-environment-microservice-architectures/)
 - 2025-02-10 — [Kubernetes vs. Proprietary Container Services: A Technical and Pragmatic Comparison](https://dortort.com/posts/kubernetes-vs-proprietary-container-services/)
-- 2025-01-15 — [Idempotent Dockerfiles: Desirable Ideal or Misplaced Objective?](https://dortort.com/posts/idempotent-dockerfiles/)
 <!-- LATEST_WRITING_END -->
 
 ## GitHub Activity
