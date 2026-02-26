@@ -28,7 +28,7 @@ Senior DevSecOps Engineer • Cloud Solutions Architect • Infrastructure & Aut
 
 <!-- CURRENT_PROJECTS_START -->
 - [agent-bound](https://github.com/dortort/agent-bound) — Access control framework for MCP servers with Android-style permissions.
-- [ai-tool-guard](https://github.com/dortort/ai-tool-guard) — Policy enforcement middleware for Vercel AI SDK tool calls — guards, approvals, rate limiting, output filtering, and observability.
+- [ai-tool-guard](https://github.com/dortort/ai-tool-guard) — Policy enforcement middleware for AI SDK tool calls — guards, approvals, rate limiting, and observability.
 - [dgossgen](https://github.com/dortort/dgossgen) — Generate dgoss container test suites from Dockerfiles via static analysis.
 - [gemini-actions](https://github.com/dortort/gemini-actions) — A collection of GitHub Actions powered by Google Gemini that automate repository workflows.
 - [keystone](https://github.com/dortort/keystone) — Open-source Electron app for AI-assisted software architecture (PRDs, TDDs, ADRs).
