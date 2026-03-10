@@ -41,6 +41,7 @@ Senior DevSecOps Engineer • Cloud Solutions Architect • Infrastructure & Aut
 ## Latest Writing
 
 <!-- LATEST_WRITING_START -->
+- 2026-03-09 — [The Terraform data-sharing problem, and why naming conventions solve most of it](https://dortort.com/posts/terraform-workspace-sharing/)
 - 2026-02-24 — [Don't Ditch AGENTS.md — Fix What's In It](https://dortort.com/posts/dont-ditch-agents-md-fix-whats-in-it/)
 - 2026-02-21 — [Agentic AI is reintroducing ClickOps](https://dortort.com/posts/agentic-operations-clickops/)
 - 2026-01-08 — [dgoss: Testing the Container, Not Just the Image](https://dortort.com/posts/runtime-contract-tests-with-dgoss/)
@@ -50,7 +51,6 @@ Senior DevSecOps Engineer • Cloud Solutions Architect • Infrastructure & Aut
 - 2025-05-06 — [Modernizing Scheduled Tasks: Reliability, Scale, and Zero Maintenance](https://dortort.com/posts/building-serverless-cron-on-aws/)
 - 2025-04-03 — [How Serverless Shrinks PCI Scope](https://dortort.com/posts/serverless-pci-dss-scope-reduction/)
 - 2025-03-04 — [Terraform at Scale: Folders, Workspaces, or Services?](https://dortort.com/posts/structuring-terraform-for-multi-environment-microservice-architectures/)
-- 2025-02-10 — [Kubernetes vs. Proprietary Container Services: A Technical and Pragmatic Comparison](https://dortort.com/posts/kubernetes-vs-proprietary-container-services/)
 <!-- LATEST_WRITING_END -->
 
 ## GitHub Activity
