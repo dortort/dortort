@@ -41,7 +41,7 @@ Senior DevSecOps Engineer • Cloud Solutions Architect • Infrastructure & Aut
 ## Latest Writing
 
 <!-- LATEST_WRITING_START -->
-- 2026-03-09 — [The Terraform data-sharing problem, and why naming conventions solve most of it](https://dortort.com/posts/terraform-workspace-sharing/)
+- 2026-03-09 — [Beyond terraform_remote_state: five ways to share data across Terraform configurations](https://dortort.com/posts/beyond-terraform-remote-state-five-ways-to-share-data-across-configurations/)
 - 2026-02-24 — [Don't Ditch AGENTS.md — Fix What's In It](https://dortort.com/posts/dont-ditch-agents-md-fix-whats-in-it/)
 - 2026-02-21 — [Agentic AI is reintroducing ClickOps](https://dortort.com/posts/agentic-operations-clickops/)
 - 2026-01-08 — [dgoss: Testing the Container, Not Just the Image](https://dortort.com/posts/runtime-contract-tests-with-dgoss/)
