@@ -113,7 +113,7 @@ def fetch_posts() -> str:
                 posts.append((date_val, title, url))
 
         posts.sort(key=lambda p: p[0], reverse=True)
-        lines = [f"- {d} — [{t}]({u})" for d, t, u in posts[:10]]
+        lines = [f"- {d} — [{t}]({u})" for d, t, u in posts[:15]]
         return "\n".join(lines)
     finally:
         shutil.rmtree(blog_dir, ignore_errors=True)
