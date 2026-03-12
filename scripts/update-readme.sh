@@ -6,7 +6,10 @@ README="README.md"
 # ── Current Projects ──────────────────────────────────────────────
 # Public repos active in the last 3 months, excluding profile and blog repos
 
-THREE_MONTHS_AGO=$(date -u -d '3 months ago' +%Y-%m-%dT%H:%M:%SZ)
+THREE_MONTHS_AGO=$(python3 -c "
+from datetime import datetime, timedelta, timezone
+print((datetime.now(timezone.utc) - timedelta(days=91)).strftime('%Y-%m-%dT%H:%M:%SZ'))
+")
 
 PROJECT_LINES=""
 while IFS=$'\t' read -r name url desc; do
@@ -36,11 +39,19 @@ trap 'rm -rf "$BLOG_DIR" 2>/dev/null || true' EXIT
 
 git clone --depth 1 https://github.com/dortort/dortort.github.io.git "$BLOG_DIR"
 
+strip_quotes() {
+  local v="$1"
+  v="${v#\"}" ; v="${v%\"}"
+  v="${v#\'}" ; v="${v%\'}"
+  printf '%s' "$v"
+}
+
 POSTS=()
 for dir in "$BLOG_DIR/_posts" "$BLOG_DIR/content/posts" "$BLOG_DIR/content/post" "$BLOG_DIR/src/posts" "$BLOG_DIR/posts"; do
   [ -d "$dir" ] || continue
   while IFS= read -r file; do
     title="" date_val="" in_fm=false
+    bn=$(basename "$file")
 
     while IFS= read -r line; do
       if [[ "$line" == "---" ]]; then
@@ -50,43 +61,37 @@ for dir in "$BLOG_DIR/_posts" "$BLOG_DIR/content/posts" "$BLOG_DIR/content/post"
       $in_fm || continue
 
       if [[ "$line" =~ ^title:\ *(.*) ]]; then
-        title="${BASH_REMATCH[1]}"
-        title="${title#\"}" ; title="${title%\"}"
-        title="${title#\'}" ; title="${title%\'}"
+        title=$(strip_quotes "${BASH_REMATCH[1]}")
       fi
       if [[ "$line" =~ ^date:\ *(.*) ]]; then
-        date_val="${BASH_REMATCH[1]}"
-        date_val="${date_val#\"}" ; date_val="${date_val%\"}"
-        date_val="${date_val#\'}" ; date_val="${date_val%\'}"
-        date_val=$(echo "$date_val" | grep -oP '^\d{4}-\d{2}-\d{2}')
+        date_val=$(strip_quotes "${BASH_REMATCH[1]}")
+        [[ "$date_val" =~ ^([0-9]{4}-[0-9]{2}-[0-9]{2}) ]] && date_val="${BASH_REMATCH[1]}" || date_val=""
       fi
     done < "$file"
 
     # Fallback: extract date from filename
     if [ -z "$date_val" ]; then
-      bn=$(basename "$file")
       if [[ "$bn" =~ ^([0-9]{4}-[0-9]{2}-[0-9]{2})- ]]; then
         date_val="${BASH_REMATCH[1]}"
       fi
     fi
 
-    [ -z "$date_val" ] || [ -z "$title" ] && continue
+    [[ -z "$date_val" || -z "$title" ]] && continue
 
     # Build URL from filename slug
-    bn=$(basename "$file")
     slug="${bn#[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]-}"
     slug="${slug%.md}" ; slug="${slug%.markdown}" ; slug="${slug%.html}"
 
     url="https://dortort.com/posts/$slug/"
-    POSTS+=("$date_val|$title|$url")
+    POSTS+=("$date_val"$'\t'"$title"$'\t'"$url")
   done < <(find "$dir" -type f \( -name '*.md' -o -name '*.markdown' \))
 done
 
 WRITING_LINES=""
 if [ ${#POSTS[@]} -gt 0 ]; then
-  while IFS='|' read -r d t u; do
+  while IFS=$'\t' read -r d t u; do
     WRITING_LINES+="- $d — [$t]($u)"$'\n'
-  done < <(printf '%s\n' "${POSTS[@]}" | sort -t'|' -k1 -r | head -10)
+  done < <(printf '%s\n' "${POSTS[@]}" | sort -t$'\t' -k1 -r | head -10)
 fi
 
 # ── Update README ─────────────────────────────────────────────────
