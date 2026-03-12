@@ -1,19 +1,18 @@
 #!/usr/bin/env python3
 """Fetch GitHub repos and blog posts to update the profile README."""
 
-import json
 import re
 import subprocess
 import tempfile
-import shutil
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 README = Path("README.md")
-EXCLUDED_REPOS = {"dortort", "dortort.github.io", "homebrew-tap"}
 POST_DIRS = ("_posts", "content/posts", "content/post", "src/posts", "posts")
 DATE_RE = re.compile(r"^(\d{4}-\d{2}-\d{2})")
 SLUG_DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}-")
+TITLE_RE = re.compile(r"^title:\s*(.*)")
+FM_DATE_RE = re.compile(r"^date:\s*(.*)")
 
 
 def fetch_projects() -> str:
@@ -42,21 +41,12 @@ def fetch_projects() -> str:
         parts = row.split("\t")
         name, url = parts[0], parts[1]
         desc = parts[2] if len(parts) > 2 else ""
-        if desc and not re.search(r"[.!?]$", desc):
+        if desc and desc[-1] not in ".!?":
             desc += "."
         lines.append(f"- [{name}]({url}) — {desc}" if desc else f"- [{name}]({url})")
 
     lines.sort(key=lambda l: l.lower())
     return "\n".join(lines)
-
-
-def strip_quotes(s: str) -> str:
-    for q in ('"', "'"):
-        if s.startswith(q):
-            s = s[1:]
-        if s.endswith(q):
-            s = s[:-1]
-    return s
 
 
 def parse_frontmatter(path: Path) -> tuple[str | None, str | None]:
@@ -70,18 +60,18 @@ def parse_frontmatter(path: Path) -> tuple[str | None, str | None]:
             continue
         if not in_fm:
             continue
-        if m := re.match(r"^title:\s*(.*)", line):
-            title = strip_quotes(m.group(1).strip())
-        if m := re.match(r"^date:\s*(.*)", line):
-            raw = strip_quotes(m.group(1).strip())
+        if m := TITLE_RE.match(line):
+            title = m.group(1).strip().strip("\"'")
+        if m := FM_DATE_RE.match(line):
+            raw = m.group(1).strip().strip("\"'")
             if dm := DATE_RE.match(raw):
                 date_val = dm.group(1)
     return title, date_val
 
 
 def fetch_posts() -> str:
-    blog_dir = Path(tempfile.mkdtemp())
-    try:
+    with tempfile.TemporaryDirectory() as tmpdir:
+        blog_dir = Path(tmpdir)
         subprocess.run(
             ["git", "clone", "--depth", "1",
              "https://github.com/dortort/dortort.github.io.git", str(blog_dir)],
@@ -107,16 +97,12 @@ def fetch_posts() -> str:
                     continue
 
                 slug = SLUG_DATE_RE.sub("", f.stem)
-                if slug.endswith(".markdown"):
-                    slug = slug.removesuffix(".markdown")
                 url = f"https://dortort.com/posts/{slug}/"
                 posts.append((date_val, title, url))
 
         posts.sort(key=lambda p: p[0], reverse=True)
         lines = [f"- {d} — [{t}]({u})" for d, t, u in posts[:15]]
         return "\n".join(lines)
-    finally:
-        shutil.rmtree(blog_dir, ignore_errors=True)
 
 
 def update_readme(projects: str, writing: str) -> None:
