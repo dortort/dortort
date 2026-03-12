@@ -51,6 +51,8 @@ Senior DevSecOps Engineer • Cloud Solutions Architect • Infrastructure & Aut
 - 2025-05-06 — [Modernizing Scheduled Tasks: Reliability, Scale, and Zero Maintenance](https://dortort.com/posts/building-serverless-cron-on-aws/)
 - 2025-04-03 — [How Serverless Shrinks PCI Scope](https://dortort.com/posts/serverless-pci-dss-scope-reduction/)
 - 2025-03-04 — [Terraform at Scale: Folders, Workspaces, or Services?](https://dortort.com/posts/structuring-terraform-for-multi-environment-microservice-architectures/)
+- 2025-02-10 — [Kubernetes vs. Proprietary Container Services: A Technical and Pragmatic Comparison](https://dortort.com/posts/kubernetes-vs-proprietary-container-services/)
+- 2025-01-15 — [Idempotent Dockerfiles: Desirable Ideal or Misplaced Objective?](https://dortort.com/posts/idempotent-dockerfiles/)
 <!-- LATEST_WRITING_END -->
 
 ## GitHub Activity
