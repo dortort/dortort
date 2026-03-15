@@ -27,6 +27,7 @@ def fetch_projects() -> str:
             "--jq",
             f'.[] | select('
             f'.private == false'
+            f' and .fork == false'
             f' and .pushed_at > "{cutoff}"'
             f' and .name != "dortort"'
             f' and .name != "dortort.github.io"'
