@@ -36,6 +36,7 @@ Senior DevSecOps Engineer • Cloud Solutions Architect • Infrastructure & Aut
 - [openclaw-aws](https://github.com/dortort/openclaw-aws) — Infrastructure and deployment automation for OpenClaw on AWS.
 - [openclaw-mailguard](https://github.com/dortort/openclaw-mailguard) — OpenClaw plugin for email prompt-injection mitigation with gated tool access.
 - [skills](https://github.com/dortort/skills) — Reusable agent skills for AI tools.
+- [terraform-aws-mcpgateway](https://github.com/dortort/terraform-aws-mcpgateway) — Terraform module to deploy MCP Context Forge on AWS — ECS/EKS, Fargate/EC2, Aurora/MySQL, Redis, ALB+WAF.
 <!-- CURRENT_PROJECTS_END -->
 
 ## Latest Writing
