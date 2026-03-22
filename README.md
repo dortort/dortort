@@ -1,34 +1,65 @@
-# Hi, I'm Francis Eytan Dortort 👋
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/header-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="assets/header-light.svg">
+    <img alt="Francis Eytan Dortort — Senior DevSecOps Engineer · Cloud Solutions Architect" src="assets/header-light.svg" width="800">
+  </picture>
+</p>
 
----
+<p align="center">
+  <em>Building secure, resilient cloud infrastructure. Shipping reliably with IaC, containers, and CI/CD.</em>
+</p>
 
-Senior DevSecOps Engineer • Cloud Solutions Architect • Infrastructure & Automation
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/divider-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="assets/divider-light.svg">
+    <img alt="" src="assets/divider-light.svg" width="800" height="1">
+  </picture>
+</p>
 
-![TypeScript](https://img.shields.io/badge/TypeScript-3178c6?style=flat-square&logo=typescript&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-f7df1e?style=flat-square&logo=javascript&logoColor=000000)
-![Node.js](https://img.shields.io/badge/Node.js-5fa04e?style=flat-square&logo=nodedotjs&logoColor=white)
-![PHP](https://img.shields.io/badge/PHP-777bb4?style=flat-square&logo=php&logoColor=white)
-![Docker](https://img.shields.io/badge/Docker-2496ed?style=flat-square&logo=docker&logoColor=white)
-![Terraform](https://img.shields.io/badge/Terraform-844fba?style=flat-square&logo=terraform&logoColor=white)
-![AWS](https://custom-icon-badges.demolab.com/badge/AWS-%23FF9900.svg?style=flat-square&logo=aws&logoColor=white)
-![Cloudflare](https://img.shields.io/badge/Cloudflare-F38020?style=flat-square&logo=Cloudflare&logoColor=white)
+<table>
+  <tr>
+    <td width="50%" valign="top">
+
+### What I Do
+
+- Architect cloud infrastructure on AWS
+- Lead DevSecOps practices and CI/CD pipelines
+- Build developer tooling and automation
+- Write about infrastructure and operations
+
+</td>
+    <td width="50%" valign="top">
+
+### Stack & Credentials
+
 ![CCSP](https://img.shields.io/badge/CCSP-Certified-00539f?style=flat-square&logo=isc2&logoColor=white)
-![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088ff?style=flat-square&logo=githubactions&logoColor=white)
+![AWS](https://custom-icon-badges.demolab.com/badge/AWS-%23FF9900.svg?style=flat-square&logo=aws&logoColor=white)
+![Terraform](https://img.shields.io/badge/Terraform-844fba?style=flat-square&logo=terraform&logoColor=white)
 ![Kubernetes](https://img.shields.io/badge/Kubernetes-326ce5?style=flat-square&logo=kubernetes&logoColor=white)
-![Linux](https://img.shields.io/badge/Linux-fcc624?style=flat-square&logo=linux&logoColor=000000)
+![Docker](https://img.shields.io/badge/Docker-2496ed?style=flat-square&logo=docker&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178c6?style=flat-square&logo=typescript&logoColor=white)
+![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088ff?style=flat-square&logo=githubactions&logoColor=white)
 
-![Website](https://img.shields.io/badge/Website-dortort.com-0b7285?style=flat-square&logo=googlechrome&logoColor=white)
-[![Blog](https://img.shields.io/badge/Blog-Posts-2f9e44?style=flat-square&logo=hashnode&logoColor=white)](https://dortort.com/posts/)
-[![GitHub](https://img.shields.io/badge/GitHub-dortort-24292e?style=flat-square&logo=github&logoColor=white)](https://github.com/dortort)
-[![Followers](https://img.shields.io/github/followers/dortort?label=Followers&style=flat-square&logo=github&logoColor=white)](https://github.com/dortort?tab=followers)
+</td>
+  </tr>
+</table>
 
-> I help engineering teams build secure, stable cloud infrastructure, lead DevOps practices, and ship reliably with CI/CD, containerization, and infrastructure as code. I love helping teams achieve resilient systems that are scalable, secure, and easy to operate.
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/divider-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="assets/divider-light.svg">
+    <img alt="" src="assets/divider-light.svg" width="800" height="1">
+  </picture>
+</p>
 
 ## Current Projects
 
 <!-- CURRENT_PROJECTS_START -->
 - [agent-bound](https://github.com/dortort/agent-bound) — Access control framework for MCP servers with Android-style permissions.
 - [ai-tool-guard](https://github.com/dortort/ai-tool-guard) — Policy enforcement middleware for AI SDK tool calls — guards, approvals, rate limiting, and observability.
+- [claude-code-scheduler](https://github.com/dortort/claude-code-scheduler) — Schedule recurring AI tasks with Claude Code using cron and natural language.
 - [dgossgen](https://github.com/dortort/dgossgen) — Generate dgoss container test suites from Dockerfiles via static analysis.
 - [gemini-actions](https://github.com/dortort/gemini-actions) — A collection of GitHub Actions powered by Google Gemini that automate repository workflows.
 - [keystone](https://github.com/dortort/keystone) — Open-source Electron app for AI-assisted software architecture (PRDs, TDDs, ADRs).
@@ -36,7 +67,16 @@ Senior DevSecOps Engineer • Cloud Solutions Architect • Infrastructure & Aut
 - [openclaw-aws](https://github.com/dortort/openclaw-aws) — Infrastructure and deployment automation for OpenClaw on AWS.
 - [openclaw-mailguard](https://github.com/dortort/openclaw-mailguard) — OpenClaw plugin for email prompt-injection mitigation with gated tool access.
 - [skills](https://github.com/dortort/skills) — Reusable agent skills for AI tools.
+- [terraform-aws-mcpgateway](https://github.com/dortort/terraform-aws-mcpgateway) — Terraform module to deploy MCP Context Forge on AWS — ECS/EKS, Fargate/EC2, Aurora/MySQL, Redis, ALB+WAF.
 <!-- CURRENT_PROJECTS_END -->
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/divider-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="assets/divider-light.svg">
+    <img alt="" src="assets/divider-light.svg" width="800" height="1">
+  </picture>
+</p>
 
 ## Latest Writing
 
@@ -55,12 +95,32 @@ Senior DevSecOps Engineer • Cloud Solutions Architect • Infrastructure & Aut
 - 2025-01-15 — [Idempotent Dockerfiles: Desirable Ideal or Misplaced Objective?](https://dortort.com/posts/idempotent-dockerfiles/)
 <!-- LATEST_WRITING_END -->
 
-## GitHub Activity
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/divider-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="assets/divider-light.svg">
+    <img alt="" src="assets/divider-light.svg" width="800" height="1">
+  </picture>
+</p>
 
-![GitHub Contribution Grid](https://ghchart.rshah.org/2f9e44/dortort)
+## Activity
 
-## Links
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://ghchart.rshah.org/58a6ff/dortort">
+    <source media="(prefers-color-scheme: light)" srcset="https://ghchart.rshah.org/2f9e44/dortort">
+    <img alt="GitHub Contribution Grid" src="https://ghchart.rshah.org/2f9e44/dortort">
+  </picture>
+</p>
 
-- [Website](https://dortort.com)
-- [Blog](https://dortort.com/posts/)
-- [GitHub](https://github.com/dortort)
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/divider-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="assets/divider-light.svg">
+    <img alt="" src="assets/divider-light.svg" width="800" height="1">
+  </picture>
+</p>
+
+<p align="center">
+  <a href="https://dortort.com">dortort.com</a> · <a href="https://dortort.com/posts/">blog</a> · <a href="https://github.com/dortort">github</a>
+</p>
