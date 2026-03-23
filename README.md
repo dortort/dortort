@@ -7,40 +7,40 @@
 </p>
 
 <p align="center">
-  <em>Building secure, resilient cloud infrastructure. Shipping reliably with IaC, containers, and CI/CD.</em>
+  <a href="https://dortort.com"><img src="https://img.shields.io/badge/dortort.com-0b7285?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Website"></a>
+  <a href="https://dortort.com/posts/"><img src="https://img.shields.io/badge/Blog-2f9e44?style=for-the-badge&logo=hashnode&logoColor=white" alt="Blog"></a>
+  <a href="https://github.com/dortort"><img src="https://img.shields.io/badge/GitHub-24292e?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"></a>
+  <a href="https://github.com/dortort?tab=followers"><img src="https://img.shields.io/github/followers/dortort?label=Followers&style=for-the-badge&logo=github&logoColor=white" alt="Followers"></a>
 </p>
 
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/divider-dark.svg">
-    <source media="(prefers-color-scheme: light)" srcset="assets/divider-light.svg">
-    <img alt="" src="assets/divider-light.svg" width="800" height="1">
-  </picture>
-</p>
+<br>
 
 <table>
   <tr>
     <td width="50%" valign="top">
 
-### What I Do
+### &nbsp;&nbsp;What I Do
 
-- Architect cloud infrastructure on AWS
-- Lead DevSecOps practices and CI/CD pipelines
-- Build developer tooling and automation
-- Write about infrastructure and operations
+&nbsp;&nbsp;**`>`** Architect cloud infrastructure on AWS<br>
+&nbsp;&nbsp;**`>`** Lead DevSecOps practices and CI/CD pipelines<br>
+&nbsp;&nbsp;**`>`** Build developer tooling and automation<br>
+&nbsp;&nbsp;**`>`** Write about infrastructure and operations
 
 </td>
     <td width="50%" valign="top">
 
-### Stack & Credentials
+### &nbsp;&nbsp;Stack & Credentials
 
-![CCSP](https://img.shields.io/badge/CCSP-Certified-00539f?style=flat-square&logo=isc2&logoColor=white)
-![AWS](https://custom-icon-badges.demolab.com/badge/AWS-%23FF9900.svg?style=flat-square&logo=aws&logoColor=white)
-![Terraform](https://img.shields.io/badge/Terraform-844fba?style=flat-square&logo=terraform&logoColor=white)
-![Kubernetes](https://img.shields.io/badge/Kubernetes-326ce5?style=flat-square&logo=kubernetes&logoColor=white)
-![Docker](https://img.shields.io/badge/Docker-2496ed?style=flat-square&logo=docker&logoColor=white)
-![TypeScript](https://img.shields.io/badge/TypeScript-3178c6?style=flat-square&logo=typescript&logoColor=white)
-![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088ff?style=flat-square&logo=githubactions&logoColor=white)
+<p>
+  <img src="https://img.shields.io/badge/CCSP-Certified-00539f?style=for-the-badge&logo=isc2&logoColor=white" alt="CCSP">
+  <img src="https://custom-icon-badges.demolab.com/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=aws&logoColor=white" alt="AWS">
+  <img src="https://img.shields.io/badge/Terraform-844fba?style=for-the-badge&logo=terraform&logoColor=white" alt="Terraform">
+  <img src="https://img.shields.io/badge/Kubernetes-326ce5?style=for-the-badge&logo=kubernetes&logoColor=white" alt="Kubernetes">
+  <img src="https://img.shields.io/badge/Docker-2496ed?style=for-the-badge&logo=docker&logoColor=white" alt="Docker">
+  <img src="https://img.shields.io/badge/TypeScript-3178c6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript">
+  <img src="https://img.shields.io/badge/GitHub_Actions-2088ff?style=for-the-badge&logo=githubactions&logoColor=white" alt="GitHub Actions">
+  <img src="https://img.shields.io/badge/Linux-fcc624?style=for-the-badge&logo=linux&logoColor=000000" alt="Linux">
+</p>
 
 </td>
   </tr>
@@ -50,7 +50,7 @@
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="assets/divider-dark.svg">
     <source media="(prefers-color-scheme: light)" srcset="assets/divider-light.svg">
-    <img alt="" src="assets/divider-light.svg" width="800" height="1">
+    <img alt="" src="assets/divider-light.svg" width="800">
   </picture>
 </p>
 
@@ -74,7 +74,7 @@
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="assets/divider-dark.svg">
     <source media="(prefers-color-scheme: light)" srcset="assets/divider-light.svg">
-    <img alt="" src="assets/divider-light.svg" width="800" height="1">
+    <img alt="" src="assets/divider-light.svg" width="800">
   </picture>
 </p>
 
@@ -99,7 +99,7 @@
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="assets/divider-dark.svg">
     <source media="(prefers-color-scheme: light)" srcset="assets/divider-light.svg">
-    <img alt="" src="assets/divider-light.svg" width="800" height="1">
+    <img alt="" src="assets/divider-light.svg" width="800">
   </picture>
 </p>
 
@@ -111,16 +111,4 @@
     <source media="(prefers-color-scheme: light)" srcset="https://ghchart.rshah.org/2f9e44/dortort">
     <img alt="GitHub Contribution Grid" src="https://ghchart.rshah.org/2f9e44/dortort">
   </picture>
-</p>
-
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/divider-dark.svg">
-    <source media="(prefers-color-scheme: light)" srcset="assets/divider-light.svg">
-    <img alt="" src="assets/divider-light.svg" width="800" height="1">
-  </picture>
-</p>
-
-<p align="center">
-  <a href="https://dortort.com">dortort.com</a> · <a href="https://dortort.com/posts/">blog</a> · <a href="https://github.com/dortort">github</a>
 </p>

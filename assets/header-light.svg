@@ -1,17 +1,42 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 180" fill="none">
-  <style>
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0; }
-    }
-    .name { font: 700 38px 'Segoe UI', system-ui, -apple-system, sans-serif; fill: #1f2328; }
-    .role { font: 400 15px 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; fill: #656d76; letter-spacing: 0.5px; }
-    .cursor { animation: blink 1s step-end infinite; fill: #0969da; }
-    .chevron { font: 400 13px 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; fill: #0969da; }
-  </style>
-  <text x="400" y="68" text-anchor="middle" class="name">Francis Eytan Dortort</text>
-  <line x1="240" y1="92" x2="560" y2="92" stroke="#d1d9e0" stroke-width="1"/>
-  <text x="244" y="89" class="chevron">›_</text>
-  <text x="400" y="128" text-anchor="middle" class="role">Senior DevSecOps Engineer  ·  Cloud Solutions Architect</text>
-  <rect x="614" y="115" width="2" height="16" rx="1" class="cursor"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="200" viewBox="0 0 800 200">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#f6f8fa"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0969da"/>
+      <stop offset="50%" stop-color="#1a7f37"/>
+      <stop offset="100%" stop-color="#0969da"/>
+    </linearGradient>
+    <linearGradient id="nameGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1f2328"/>
+      <stop offset="100%" stop-color="#32383f"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <rect width="800" height="200" fill="url(#bg)" rx="6"/>
+  <!-- Top accent line -->
+  <rect x="0" y="0" width="800" height="3" fill="url(#accent)" rx="6"/>
+  <!-- Terminal dots -->
+  <circle cx="28" cy="22" r="5" fill="#ff5f57"/>
+  <circle cx="46" cy="22" r="5" fill="#febc2e"/>
+  <circle cx="64" cy="22" r="5" fill="#28c840"/>
+  <!-- Prompt line -->
+  <text x="88" y="26" font-family="'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace" font-size="12" fill="#656d76">~/dortort</text>
+  <!-- Name -->
+  <text x="400" y="90" text-anchor="middle" font-family="'Segoe UI', system-ui, -apple-system, sans-serif" font-weight="700" font-size="42" fill="url(#nameGrad)">Francis Eytan Dortort</text>
+  <!-- Accent bar -->
+  <rect x="300" y="105" width="200" height="2" fill="url(#accent)" filter="url(#glow)"/>
+  <!-- Role -->
+  <text x="400" y="138" text-anchor="middle" font-family="'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace" font-size="14" fill="#0969da">Senior DevSecOps Engineer</text>
+  <text x="400" y="160" text-anchor="middle" font-family="'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace" font-size="14" fill="#656d76">Cloud Solutions Architect · Infrastructure &amp; Automation</text>
+  <!-- Bottom accent line -->
+  <rect x="0" y="197" width="800" height="3" fill="url(#accent)" rx="6"/>
 </svg>
