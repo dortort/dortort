@@ -21,10 +21,10 @@
 
 ### &nbsp;&nbsp;What I Do
 
-&nbsp;&nbsp;**`>`** Architect cloud infrastructure on AWS<br>
-&nbsp;&nbsp;**`>`** Lead DevSecOps practices and CI/CD pipelines<br>
-&nbsp;&nbsp;**`>`** Build developer tooling and automation<br>
-&nbsp;&nbsp;**`>`** Write about infrastructure and operations
+☁️ Architect cloud infrastructure on AWS<br>
+🔒 Lead DevSecOps practices and CI/CD pipelines<br>
+🛠️ Build developer tooling and automation<br>
+✍️ Write about infrastructure and operations
 
 </td>
     <td width="50%" valign="top">
