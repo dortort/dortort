@@ -65,8 +65,7 @@
   <!-- Gold divider bar -->
   <rect x="200" y="108" width="400" height="2" fill="url(#gold-line)" filter="url(#gold-glow)"/>
   <!-- Subtitle -->
-  <text x="400" y="145" text-anchor="middle" class="subtitle">Senior DevSecOps Engineer | Cloud Solutions Architect</text>
-  <text x="400" y="170" text-anchor="middle" class="subtitle">Infrastructure &amp; Automation</text>
+  <text x="400" y="150" text-anchor="middle" class="subtitle">SENIOR DEVSECOPS ENGINEER | CLOUD SOLUTIONS ARCHITECT</text>
   <!-- Bottom gold accent -->
   <rect x="0" y="207" width="800" height="3" fill="url(#gold-line)" rx="8"/>
 </svg>
