@@ -57,7 +57,6 @@
 ## Current Projects
 
 <!-- CURRENT_PROJECTS_START -->
-- [agent-bound](https://github.com/dortort/agent-bound) — Access control framework for MCP servers with Android-style permissions.
 - [ai-tool-guard](https://github.com/dortort/ai-tool-guard) — Policy enforcement middleware for AI SDK tool calls — guards, approvals, rate limiting, and observability.
 - [betterleaks-action](https://github.com/dortort/betterleaks-action) — GitHub Action for Betterleaks secrets detection - scan for exposed credentials in your CI/CD pipeline.
 - [claude-code-scheduler](https://github.com/dortort/claude-code-scheduler) — Schedule recurring AI tasks with Claude Code using cron and natural language.
