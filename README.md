@@ -57,7 +57,6 @@
 ## Current Projects
 
 <!-- CURRENT_PROJECTS_START -->
-- [ai-tool-guard](https://github.com/dortort/ai-tool-guard) — Policy enforcement middleware for AI SDK tool calls — guards, approvals, rate limiting, and observability.
 - [betterleaks-action](https://github.com/dortort/betterleaks-action) — GitHub Action for Betterleaks secrets detection - scan for exposed credentials in your CI/CD pipeline.
 - [claude-code-scheduler](https://github.com/dortort/claude-code-scheduler) — Schedule recurring AI tasks with Claude Code using cron and natural language.
 - [skills](https://github.com/dortort/skills) — Reusable agent skills for AI tools.
