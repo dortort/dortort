@@ -9,6 +9,7 @@ from pathlib import Path
 
 README = Path("README.md")
 POST_DIRS = ("_posts", "content/posts", "content/post", "src/posts", "posts")
+PROJECT_ACTIVITY_WINDOW_DAYS = 183
 DATE_RE = re.compile(r"^(\d{4}-\d{2}-\d{2})")
 SLUG_DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}-")
 TITLE_RE = re.compile(r"^title:\s*(.*)")
@@ -16,7 +17,9 @@ FM_DATE_RE = re.compile(r"^date:\s*(.*)")
 
 
 def fetch_projects() -> str:
-    cutoff = (datetime.now(timezone.utc) - timedelta(days=91)).strftime(
+    cutoff = (
+        datetime.now(timezone.utc) - timedelta(days=PROJECT_ACTIVITY_WINDOW_DAYS)
+    ).strftime(
         "%Y-%m-%dT%H:%M:%SZ"
     )
     result = subprocess.run(
