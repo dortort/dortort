@@ -58,6 +58,7 @@
 
 <!-- CURRENT_PROJECTS_START -->
 - [agent-bound](https://github.com/dortort/agent-bound) — Access control framework for MCP servers with Android-style permissions.
+- [agentry](https://github.com/dortort/agentry) — Playwright for AI Agents — end-to-end testing for agent CLIs, MCP servers, and skills. Drive a real agent, assert on what it did, replay deterministically in CI.
 - [ai-tool-guard](https://github.com/dortort/ai-tool-guard) — Policy enforcement middleware for AI SDK tool calls — guards, approvals, rate limiting, and observability.
 - [betterleaks-action](https://github.com/dortort/betterleaks-action) — GitHub Action for Betterleaks secrets detection - scan for exposed credentials in your CI/CD pipeline.
 - [claude-code-scheduler](https://github.com/dortort/claude-code-scheduler) — Schedule recurring AI tasks with Claude Code using cron and natural language.
@@ -66,7 +67,6 @@
 - [keystone](https://github.com/dortort/keystone) — Open-source Electron app for AI-assisted software architecture (PRDs, TDDs, ADRs).
 - [moovit-client](https://github.com/dortort/moovit-client) — TypeScript client library for Moovit public transit API (route planning, real-time arrivals, and location search).
 - [openclaw-aws](https://github.com/dortort/openclaw-aws) — Infrastructure and deployment automation for OpenClaw on AWS.
-- [openclaw-mailguard](https://github.com/dortort/openclaw-mailguard) — OpenClaw plugin for email prompt-injection mitigation with gated tool access.
 - [skills](https://github.com/dortort/skills) — Reusable agent skills for AI tools.
 - [terraform-aws-mcpgateway](https://github.com/dortort/terraform-aws-mcpgateway) — Terraform module to deploy MCP Context Forge on AWS — ECS/EKS, Fargate/EC2, Aurora/MySQL, Redis, ALB+WAF.
 <!-- CURRENT_PROJECTS_END -->
