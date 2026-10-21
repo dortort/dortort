@@ -57,6 +57,7 @@
 ## Current Projects
 
 <!-- CURRENT_PROJECTS_START -->
+- [across-amazon](https://github.com/dortort/across-amazon) — Chrome extension that finds the Amazon store that delivers a product to you for the lowest total: item, shipping and import fees.
 - [agent-bound](https://github.com/dortort/agent-bound) — Access control framework for MCP servers with Android-style permissions.
 - [agentry](https://github.com/dortort/agentry) — Playwright for AI Agents — end-to-end testing for agent CLIs, MCP servers, and skills. Drive a real agent, assert on what it did, replay deterministically in CI.
 - [ai-tool-guard](https://github.com/dortort/ai-tool-guard) — Policy enforcement middleware for AI SDK tool calls — guards, approvals, rate limiting, and observability.
