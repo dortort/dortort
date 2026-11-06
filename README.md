@@ -86,6 +86,7 @@
 ## Latest Writing
 
 <!-- LATEST_WRITING_START -->
+- 2026-11-05 — [Safe Tools, Unsafe Session: Why Agent Permissions Need History](https://dortort.com/posts/safe-tools-unsafe-session-why-agent-permissions-need-history/)
 - 2026-08-02 — [Agentic DevOps Security: Old IAM Failures at New Speed](https://dortort.com/posts/agentic-devops-security-old-iam-failures-at-new-speed/)
 - 2026-05-20 — [Monorepo vs Multi-Repo: Why AI Agents Tip the Scale](https://dortort.com/posts/monorepo-vs-multi-repo-why-ai-agents-tip-the-scale/)
 - 2026-04-07 — [Closing the automation gap in Claude Code](https://dortort.com/posts/closing-the-automation-gap-in-claude-code/)
@@ -100,7 +101,6 @@
 - 2025-04-03 — [How Serverless Shrinks PCI Scope](https://dortort.com/posts/serverless-pci-dss-scope-reduction/)
 - 2025-03-04 — [Terraform at Scale: Folders, Workspaces, or Services?](https://dortort.com/posts/structuring-terraform-for-multi-environment-microservice-architectures/)
 - 2025-02-10 — [Kubernetes vs. Proprietary Container Services: A Technical and Pragmatic Comparison](https://dortort.com/posts/kubernetes-vs-proprietary-container-services/)
-- 2025-01-15 — [Idempotent Dockerfiles: Desirable Ideal or Misplaced Objective?](https://dortort.com/posts/idempotent-dockerfiles/)
 <!-- LATEST_WRITING_END -->
 
 <p align="center">
