@@ -1,7 +1,7 @@
 #!/usr/bin/env -S uv run --script
 # /// script
-# requires-python = ">=3.11"
-# dependencies = ["fonttools", "uharfbuzz"]
+# requires-python = ">=3.11,<3.14"
+# dependencies = ["fonttools", "skia-pathops", "uharfbuzz"]
 # ///
 """Generate the animated SVGs the profile README embeds."""
 
@@ -42,7 +42,9 @@ ON_HOLD = "#1f2328"
 
 class Face:
     def __init__(self, **axes: float) -> None:
-        self.font = instancer.instantiateVariableFont(TTFont(FONT), axes)
+        self.font = instancer.instantiateVariableFont(
+            TTFont(FONT), axes, overlap=instancer.OverlapMode.REMOVE
+        )
         buf = io.BytesIO()
         self.font.save(buf)
         self.hb = hb.Font(hb.Face(buf.getvalue()))
@@ -194,7 +196,7 @@ def stackorder(display: Face, label: Face, theme: dict[str, str]) -> str:
             f'<path class="e{index}" d="M{x1} {y}H{x2}" stroke="{theme["blue"]}" stroke-width="2"/>'
         )
     label_text = "Stackorder: five stacks applied in three dependency waves"
-    return svg(220, label_text, "".join(css), "".join(body))
+    return svg(234, label_text, "".join(css), "".join(body))
 
 
 def wawarden(display: Face, label: Face, theme: dict[str, str]) -> str:
@@ -205,9 +207,9 @@ def wawarden(display: Face, label: Face, theme: dict[str, str]) -> str:
         f".m{{opacity:0;animation-duration:{duration}s;animation-timing-function:linear;"
         "animation-iteration-count:infinite}",
         f"@keyframes stop{{0%{{opacity:0;transform:translate(0,0);fill:{theme['ink']}}}"
-        f"6%{{opacity:1}}44%{{transform:translate(254px,0);fill:{theme['ink']}}}"
+        f"6%{{opacity:1}}44%{{transform:translate(248px,0);fill:{theme['ink']}}}"
         f"52%{{fill:{theme['hold']}}}74%{{opacity:1}}"
-        f"86%,100%{{opacity:0;transform:translate(254px,0);fill:{theme['hold']}}}}}",
+        f"86%,100%{{opacity:0;transform:translate(248px,0);fill:{theme['hold']}}}}}",
         ".stop{animation-name:stop}",
     ]
     body = [
@@ -254,7 +256,7 @@ def wawarden(display: Face, label: Face, theme: dict[str, str]) -> str:
         + label.text("Your agent", 16, (agent_x + W) / 2, agent_y + 6, ON_BLUE, anchor="middle")
     )
     label_text = "WaWarden: messages from allowlisted chats reach your agent, the rest stop at the gate"
-    return svg(246, label_text, "".join(css), "".join(body))
+    return svg(258, label_text, "".join(css), "".join(body))
 
 
 def taintguard(display: Face, label: Face, theme: dict[str, str]) -> str:
@@ -309,7 +311,7 @@ def taintguard(display: Face, label: Face, theme: dict[str, str]) -> str:
         "TaintGuard: after a session reads an .env file it carries the label secret, "
         "and WebFetch and Bash are refused"
     )
-    return svg(200, label_text, "".join(css), "".join(body))
+    return svg(212, label_text, "".join(css), "".join(body))
 
 
 def across_amazon(display: Face, label: Face, theme: dict[str, str]) -> str:
@@ -372,7 +374,7 @@ def across_amazon(display: Face, label: Face, theme: dict[str, str]) -> str:
             + f'<g transform="translate({bar_x} {y})"><g class="bar{index}"><g{lose}>{"".join(segments)}</g></g>{best}</g></g>'
         )
     label_text = "Across Amazon: four Amazon stores ranked by item, shipping and import fees, lowest delivered total first"
-    return svg(220, label_text, "".join(css), "".join(body))
+    return svg(234, label_text, "".join(css), "".join(body))
 
 
 def writing(display: Face, theme: dict[str, str]) -> str:
