@@ -217,13 +217,13 @@ def hero(display: Face, serif: Face, label: Face) -> str:
     body.append(f'<rect x="{W / 2 - 1}" y="288" width="2" height="40" fill="{SITE["gold"]}"/>')
     body.append(
         label.text(
-            f"Plan: {index} to add, 0 to change, 0 to destroy.",
+            "Plan: secure, scalable, compliant.",
             15, W / 2, 364, SITE["gold"], anchor="middle", cls="plan", tracking=0.04,
         )
     )
     body.append(
         label.text(
-            f"Apply complete! Resources: {index} added, 0 changed, 0 destroyed.",
+            "Apply complete! 20 years in production.",
             15, W / 2, 364, SITE["gold"], anchor="middle", cls="done", tracking=0.04,
         )
     )
