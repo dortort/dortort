@@ -1,6 +1,6 @@
 <a href="https://dortort.com"><img src="assets/hero.svg" width="100%" alt="Francis Eytan Dortort, Senior DevSecOps Engineer and Cloud Solutions Architect"></a>
 
-I started as a full-stack developer and have spent 20 years growing into cloud architecture and DevSecOps. I design multi-account AWS platforms, build them with Terraform and Kubernetes, and keep them PCI-DSS and SOC 2 compliant. CCSP certified.
+I started as a full-stack developer and have spent 20 years growing into cloud architecture and DevSecOps. I design multi-account AWS platforms, build them with Terraform and CI/CD pipelines, and keep them PCI-DSS and SOC 2 compliant. CCSP certified.
 
 **[Blog](https://dortort.com)** &nbsp;&nbsp; **[CV](https://dortort.com/cv/)**
 
