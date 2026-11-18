@@ -1,2 +1,4 @@
 .claude/
 .omc/
+__pycache__/
+scripts/.fonts/

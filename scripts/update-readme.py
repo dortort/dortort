@@ -10,10 +10,14 @@ from pathlib import Path
 README = Path("README.md")
 POST_DIRS = ("_posts", "content/posts", "content/post", "src/posts", "posts")
 PROJECT_ACTIVITY_WINDOW_DAYS = 183
+FEATURED_REPOS = ("wawarden", "claude-plugins", "across-amazon")
+HIDDEN_REPOS = ("dortort", "dortort.github.io", "homebrew-tap", *FEATURED_REPOS)
+LATEST_POST_COUNT = 4
 DATE_RE = re.compile(r"^(\d{4}-\d{2}-\d{2})")
 SLUG_DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}-")
 TITLE_RE = re.compile(r"^title:\s*(.*)")
 FM_DATE_RE = re.compile(r"^date:\s*(.*)")
+DESCRIPTION_RE = re.compile(r"^description:\s*(.*)")
 
 
 def fetch_projects() -> str:
@@ -22,6 +26,7 @@ def fetch_projects() -> str:
     ).strftime(
         "%Y-%m-%dT%H:%M:%SZ"
     )
+    hidden = "".join(f' and .name != "{name}"' for name in HIDDEN_REPOS)
     result = subprocess.run(
         [
             "gh", "api",
@@ -32,9 +37,7 @@ def fetch_projects() -> str:
             f'.private == false'
             f' and .fork == false'
             f' and .pushed_at > "{cutoff}"'
-            f' and .name != "dortort"'
-            f' and .name != "dortort.github.io"'
-            f' and .name != "homebrew-tap"'
+            f'{hidden}'
             f') | [.name, .html_url, (.description // "")] | @tsv',
         ],
         capture_output=True, text=True, check=True,
@@ -53,8 +56,9 @@ def fetch_projects() -> str:
     return "\n".join(lines)
 
 
-def parse_frontmatter(path: Path) -> tuple[str | None, str | None]:
+def parse_frontmatter(path: Path) -> tuple[str | None, str | None, str]:
     title = date_val = None
+    description = ""
     in_fm = False
     for line in path.read_text(errors="replace").splitlines():
         if line.strip() == "---":
@@ -70,10 +74,28 @@ def parse_frontmatter(path: Path) -> tuple[str | None, str | None]:
             raw = m.group(1).strip().strip("\"'")
             if dm := DATE_RE.match(raw):
                 date_val = dm.group(1)
-    return title, date_val
+        if m := DESCRIPTION_RE.match(line):
+            description = m.group(1).strip().strip("\"'")
+    return title, date_val, description
 
 
-def fetch_posts() -> str:
+def format_date(date_val: str) -> str:
+    published = datetime.strptime(date_val, "%Y-%m-%d")
+    return f"{published:%B} {published.day}, {published.year}"
+
+
+def format_latest(date_val: str, title: str, url: str, description: str) -> str:
+    lines = [f"<sub>{format_date(date_val)}</sub>", f"**[{title}]({url})**"]
+    if description:
+        lines.append(description)
+    return "<br>\n".join(lines)
+
+
+def format_earlier(date_val: str, title: str, url: str, description: str) -> str:
+    return f"- [{title}]({url}) <sub>{format_date(date_val)}</sub>"
+
+
+def fetch_posts() -> tuple[str, str]:
     with tempfile.TemporaryDirectory() as tmpdir:
         blog_dir = Path(tmpdir)
         subprocess.run(
@@ -82,7 +104,7 @@ def fetch_posts() -> str:
             check=True, capture_output=True,
         )
 
-        posts: list[tuple[str, str, str]] = []
+        posts: list[tuple[str, str, str, str]] = []
         for sub in POST_DIRS:
             d = blog_dir / sub
             if not d.is_dir():
@@ -90,7 +112,7 @@ def fetch_posts() -> str:
             for f in d.iterdir():
                 if f.suffix not in (".md", ".markdown"):
                     continue
-                title, date_val = parse_frontmatter(f)
+                title, date_val, description = parse_frontmatter(f)
 
                 # Fallback: extract date from filename
                 if not date_val:
@@ -102,34 +124,36 @@ def fetch_posts() -> str:
 
                 slug = SLUG_DATE_RE.sub("", f.stem)
                 url = f"https://dortort.com/posts/{slug}/"
-                posts.append((date_val, title, url))
+                posts.append((date_val, title, url, description))
 
         posts.sort(key=lambda p: p[0], reverse=True)
-        lines = [f"- {d} — [{t}]({u})" for d, t, u in posts[:15]]
-        return "\n".join(lines)
+        return (
+            "\n\n".join(format_latest(*post) for post in posts[:LATEST_POST_COUNT]),
+            "\n".join(format_earlier(*post) for post in posts[LATEST_POST_COUNT:]),
+        )
 
 
-def update_readme(projects: str, writing: str) -> None:
+def update_readme(projects: str, latest: str, earlier: str) -> None:
     text = README.read_text()
     sections = {
         ("<!-- CURRENT_PROJECTS_START -->", "<!-- CURRENT_PROJECTS_END -->"): projects,
-        ("<!-- LATEST_WRITING_START -->", "<!-- LATEST_WRITING_END -->"): writing,
+        ("<!-- LATEST_WRITING_START -->", "<!-- LATEST_WRITING_END -->"): latest,
+        ("<!-- EARLIER_WRITING_START -->", "<!-- EARLIER_WRITING_END -->"): earlier,
     }
     for (start_tag, end_tag), content in sections.items():
         pattern = re.compile(
             rf"({re.escape(start_tag)}\n).*?(\n{re.escape(end_tag)})",
             re.DOTALL,
         )
-        replacement = rf"\g<1>{content}\g<2>" if content else rf"\g<1>\g<2>"
-        text = pattern.sub(replacement, text)
+        text = pattern.sub(lambda m, c=content: f"{m.group(1)}{c}{m.group(2)}", text)
 
     README.write_text(text)
 
 
 def main() -> None:
     projects = fetch_projects()
-    writing = fetch_posts()
-    update_readme(projects, writing)
+    latest, earlier = fetch_posts()
+    update_readme(projects, latest, earlier)
     print("README updated successfully.")
 
 

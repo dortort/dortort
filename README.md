@@ -1,68 +1,69 @@
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/header-dark.svg">
-    <source media="(prefers-color-scheme: light)" srcset="assets/header-light.svg">
-    <img alt="Francis Eytan Dortort — Senior DevSecOps Engineer · Cloud Solutions Architect" src="assets/header-light.svg" width="800">
-  </picture>
-</p>
+<a href="https://dortort.com"><img src="assets/hero.svg" width="100%" alt="Francis Eytan Dortort, Senior DevSecOps Engineer and Cloud Solutions Architect"></a>
 
-<p align="center">
-  <a href="https://dortort.com"><img src="https://img.shields.io/badge/dortort.com-0b7285?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Website"></a>
-  <a href="https://dortort.com/posts/"><img src="https://img.shields.io/badge/Blog-2f9e44?style=for-the-badge&logo=hashnode&logoColor=white" alt="Blog"></a>
-  <a href="https://github.com/dortort"><img src="https://img.shields.io/badge/GitHub-24292e?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"></a>
-  <a href="https://github.com/dortort?tab=followers"><img src="https://img.shields.io/github/followers/dortort?label=Followers&style=for-the-badge&logo=github&logoColor=white" alt="Followers"></a>
-</p>
+I started as a full-stack developer and have spent 20 years growing into cloud architecture and DevSecOps. I design multi-account AWS platforms, build them with Terraform and CI/CD pipelines, and keep them PCI-DSS and SOC 2 compliant. CCSP certified.
+
+**[Blog](https://dortort.com)** &nbsp;&nbsp; **[CV](https://dortort.com/cv/)**
 
 <br>
 
-<table>
-  <tr>
-    <td width="50%" valign="top">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/section-open-source-dark.svg">
+  <img src="assets/section-open-source-light.svg" width="100%" alt="Open source">
+</picture>
 
-### &nbsp;&nbsp;What I Do
-
-☁️ Architect cloud infrastructure on AWS<br>
-🔒 Lead DevSecOps practices and CI/CD pipelines<br>
-🛠️ Build developer tooling and automation<br>
-✍️ Write about infrastructure and operations
-
-</td>
-    <td width="50%" valign="top">
-
-### &nbsp;&nbsp;Stack & Credentials
-
-<p>
-  <img src="https://img.shields.io/badge/CCSP-Certified-00539f?style=for-the-badge&logo=isc2&logoColor=white" alt="CCSP">
-  <img src="https://custom-icon-badges.demolab.com/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=aws&logoColor=white" alt="AWS">
-  <img src="https://img.shields.io/badge/Terraform-844fba?style=for-the-badge&logo=terraform&logoColor=white" alt="Terraform">
-  <img src="https://img.shields.io/badge/Kubernetes-326ce5?style=for-the-badge&logo=kubernetes&logoColor=white" alt="Kubernetes">
-  <img src="https://img.shields.io/badge/Docker-2496ed?style=for-the-badge&logo=docker&logoColor=white" alt="Docker">
-  <img src="https://img.shields.io/badge/TypeScript-3178c6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript">
-  <img src="https://img.shields.io/badge/GitHub_Actions-2088ff?style=for-the-badge&logo=githubactions&logoColor=white" alt="GitHub Actions">
-  <img src="https://img.shields.io/badge/Linux-fcc624?style=for-the-badge&logo=linux&logoColor=000000" alt="Linux">
-</p>
-
-</td>
-  </tr>
-</table>
-
-<p align="center">
+<a href="https://github.com/stackorder/stackorder">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/divider-dark.svg">
-    <source media="(prefers-color-scheme: light)" srcset="assets/divider-light.svg">
-    <img alt="" src="assets/divider-light.svg" width="800">
+    <source media="(prefers-color-scheme: dark)" srcset="assets/stackorder-dark.svg">
+    <img src="assets/stackorder-light.svg" width="100%" alt="Stackorder: five stacks applied in three dependency waves">
   </picture>
-</p>
+</a>
 
-## Current Projects
+Which stacks, in what order. Stackorder plans every Terraform or OpenTofu stack a pull request affects and applies them in dependency waves on your own GitHub Actions runners. Its server stores no state, and holds no cloud credentials unless you turn on shared outputs.
+
+**[stackorder.io](https://stackorder.io)** &nbsp;&nbsp; **[Docs](https://docs.stackorder.io)** &nbsp;&nbsp; **[Source](https://github.com/stackorder/stackorder)**
+
+<a href="https://github.com/dortort/wawarden">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/wawarden-dark.svg">
+    <img src="assets/wawarden-light.svg" width="100%" alt="WaWarden: messages from allowlisted chats reach your agent, the rest stop at the gate">
+  </picture>
+</a>
+
+A self-hosted WhatsApp gateway for your own AI agents. WaWarden links one personal account, keeps its messages in a local archive, and exposes them over REST and MCP. Each client gets a token that reads only the chats on its allowlist.
+
+**[Docs](https://wawarden.dortort.dev/)** &nbsp;&nbsp; **[Source](https://github.com/dortort/wawarden)**
+
+<a href="https://github.com/dortort/claude-plugins/tree/main/plugins/taint-guard">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/taintguard-dark.svg">
+    <img src="assets/taintguard-light.svg" width="100%" alt="TaintGuard in a Claude Code session: after Read(.env) the session carries the label secret, and WebFetch and Bash are refused">
+  </picture>
+</a>
+
+A Claude Code mod that remembers which sensitive or untrusted sources have entered a session and refuses risky tool calls once they have. After Claude reads an `.env` file, `Bash`, `WebFetch` and outbound MCP tools are refused outright.
+
+**[Source](https://github.com/dortort/claude-plugins/tree/main/plugins/taint-guard)** &nbsp;&nbsp; **[Why agent permissions need history](https://dortort.com/posts/safe-tools-unsafe-session-why-agent-permissions-need-history/)**
+
+<a href="https://github.com/dortort/across-amazon">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/across-amazon-dark.svg">
+    <img src="assets/across-amazon-light.svg" width="100%" alt="Across Amazon: four Amazon stores ranked by item, shipping and import fees, lowest delivered total first">
+  </picture>
+</a>
+
+A Chrome extension that finds the Amazon store that delivers a product to you for the lowest total: item, shipping and import fees.
+
+**[Chrome Web Store](https://chromewebstore.google.com/detail/across-amazon/jipkoghidlgfmgoihpaecdnaapiniglc)** &nbsp;&nbsp; **[Website](https://across-amazon.dortort.dev)** &nbsp;&nbsp; **[Source](https://github.com/dortort/across-amazon)**
+
+<details>
+<summary>More open-source projects</summary>
+<br>
 
 <!-- CURRENT_PROJECTS_START -->
-- [across-amazon](https://github.com/dortort/across-amazon) — Chrome extension that finds the Amazon store that delivers a product to you for the lowest total: item, shipping and import fees.
 - [agent-bound](https://github.com/dortort/agent-bound) — Access control framework for MCP servers with Android-style permissions.
 - [agentry](https://github.com/dortort/agentry) — Playwright for AI Agents — end-to-end testing for agent CLIs, MCP servers, and skills. Drive a real agent, assert on what it did, replay deterministically in CI.
 - [ai-tool-guard](https://github.com/dortort/ai-tool-guard) — Policy enforcement middleware for AI SDK tool calls — guards, approvals, rate limiting, and observability.
 - [betterleaks-action](https://github.com/dortort/betterleaks-action) — GitHub Action for Betterleaks secrets detection - scan for exposed credentials in your CI/CD pipeline.
-- [claude-plugins](https://github.com/dortort/claude-plugins) — Claude Code plugins, mods, and portable agent skills by dortort.
 - [dgossgen](https://github.com/dortort/dgossgen) — Generate dgoss container test suites from Dockerfiles via static analysis.
 - [gemini-actions](https://github.com/dortort/gemini-actions) — A collection of GitHub Actions powered by Google Gemini that automate repository workflows.
 - [keystone](https://github.com/dortort/keystone) — Open-source Electron app for AI-assisted software architecture (PRDs, TDDs, ADRs).
@@ -72,51 +73,54 @@
 - [skills](https://github.com/dortort/skills) — Reusable agent skills for AI tools.
 - [TADBench](https://github.com/dortort/TADBench) — A unified benchmark for embedding-based threat detection in LLM prompts.
 - [terraform-aws-mcpgateway](https://github.com/dortort/terraform-aws-mcpgateway) — Terraform module to deploy MCP Context Forge on AWS — ECS/EKS, Fargate/EC2, Aurora/MySQL, Redis, ALB+WAF.
-- [wawarden](https://github.com/dortort/wawarden) — WaWarden: a self-hosted WhatsApp gateway that gives AI agents and apps per-client, per-chat scoped access to one personal account.
 <!-- CURRENT_PROJECTS_END -->
 
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/divider-dark.svg">
-    <source media="(prefers-color-scheme: light)" srcset="assets/divider-light.svg">
-    <img alt="" src="assets/divider-light.svg" width="800">
-  </picture>
-</p>
+</details>
 
-## Latest Writing
+<br>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/section-writing-dark.svg">
+  <img src="assets/section-writing-light.svg" width="100%" alt="Writing">
+</picture>
 
 <!-- LATEST_WRITING_START -->
-- 2026-11-05 — [Safe Tools, Unsafe Session: Why Agent Permissions Need History](https://dortort.com/posts/safe-tools-unsafe-session-why-agent-permissions-need-history/)
-- 2026-08-02 — [Agentic DevOps Security: Old IAM Failures at New Speed](https://dortort.com/posts/agentic-devops-security-old-iam-failures-at-new-speed/)
-- 2026-05-20 — [Monorepo vs Multi-Repo: Why AI Agents Tip the Scale](https://dortort.com/posts/monorepo-vs-multi-repo-why-ai-agents-tip-the-scale/)
-- 2026-04-07 — [Closing the automation gap in Claude Code](https://dortort.com/posts/closing-the-automation-gap-in-claude-code/)
-- 2026-03-09 — [Beyond terraform_remote_state: five ways to share data across Terraform configurations](https://dortort.com/posts/beyond-terraform-remote-state-five-ways-to-share-data-across-configurations/)
-- 2026-02-24 — [Don't Ditch AGENTS.md — Fix What's In It](https://dortort.com/posts/dont-ditch-agents-md-fix-whats-in-it/)
-- 2026-02-21 — [Agentic AI is reintroducing ClickOps](https://dortort.com/posts/agentic-operations-clickops/)
-- 2026-01-08 — [dgoss: Testing the Container, Not Just the Image](https://dortort.com/posts/runtime-contract-tests-with-dgoss/)
-- 2025-08-04 — [A Practical Guide to Terraform Dependency Management](https://dortort.com/posts/terraform-version-constraints/)
-- 2025-07-02 — [Stop Scripting, Start Architecting: The OOP Approach to Terraform](https://dortort.com/posts/stop-scripting-start-architecting-terraform-oop/)
-- 2025-06-04 — [Why GitFlow Fails at Infrastructure](https://dortort.com/posts/terraform-strategy-gitflow-vs-trunk-based/)
-- 2025-05-06 — [Modernizing Scheduled Tasks: Reliability, Scale, and Zero Maintenance](https://dortort.com/posts/building-serverless-cron-on-aws/)
-- 2025-04-03 — [How Serverless Shrinks PCI Scope](https://dortort.com/posts/serverless-pci-dss-scope-reduction/)
-- 2025-03-04 — [Terraform at Scale: Folders, Workspaces, or Services?](https://dortort.com/posts/structuring-terraform-for-multi-environment-microservice-architectures/)
-- 2025-02-10 — [Kubernetes vs. Proprietary Container Services: A Technical and Pragmatic Comparison](https://dortort.com/posts/kubernetes-vs-proprietary-container-services/)
+<sub>November 5, 2026</sub><br>
+**[Safe Tools, Unsafe Session: Why Agent Permissions Need History](https://dortort.com/posts/safe-tools-unsafe-session-why-agent-permissions-need-history/)**<br>
+Taint tracking for AI agent tool calls: per-tool allow/deny rules miss the lethal trifecta, so TaintGuard gates Claude Code by what the session has read.
+
+<sub>August 2, 2026</sub><br>
+**[Agentic DevOps Security: Old IAM Failures at New Speed](https://dortort.com/posts/agentic-devops-security-old-iam-failures-at-new-speed/)**<br>
+Agentic DevOps security concerns aren't new — they're old IAM failures (least privilege, step-up auth, JIT) agents now exercise at machine speed.
+
+<sub>May 20, 2026</sub><br>
+**[Monorepo vs Multi-Repo: Why AI Agents Tip the Scale](https://dortort.com/posts/monorepo-vs-multi-repo-why-ai-agents-tip-the-scale/)**<br>
+AI coding agents optimize for full-codebase context, atomic changes, and connected dependency graphs — properties that monorepo provides by default.
+
+<sub>April 7, 2026</sub><br>
+**[Closing the automation gap in Claude Code](https://dortort.com/posts/closing-the-automation-gap-in-claude-code/)**<br>
+claude-code-scheduler bridges Claude Code to launchd and crontab for persistent, observable, stateful task automation — no Desktop app required.
 <!-- LATEST_WRITING_END -->
 
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/divider-dark.svg">
-    <source media="(prefers-color-scheme: light)" srcset="assets/divider-light.svg">
-    <img alt="" src="assets/divider-light.svg" width="800">
-  </picture>
-</p>
+<details>
+<summary>Earlier articles</summary>
+<br>
 
-## Activity
+<!-- EARLIER_WRITING_START -->
+- [Beyond terraform_remote_state: five ways to share data across Terraform configurations](https://dortort.com/posts/beyond-terraform-remote-state-five-ways-to-share-data-across-configurations/) <sub>March 9, 2026</sub>
+- [Don't Ditch AGENTS.md — Fix What's In It](https://dortort.com/posts/dont-ditch-agents-md-fix-whats-in-it/) <sub>February 24, 2026</sub>
+- [Agentic AI is reintroducing ClickOps](https://dortort.com/posts/agentic-operations-clickops/) <sub>February 21, 2026</sub>
+- [dgoss: Testing the Container, Not Just the Image](https://dortort.com/posts/runtime-contract-tests-with-dgoss/) <sub>January 8, 2026</sub>
+- [A Practical Guide to Terraform Dependency Management](https://dortort.com/posts/terraform-version-constraints/) <sub>August 4, 2025</sub>
+- [Stop Scripting, Start Architecting: The OOP Approach to Terraform](https://dortort.com/posts/stop-scripting-start-architecting-terraform-oop/) <sub>July 2, 2025</sub>
+- [Why GitFlow Fails at Infrastructure](https://dortort.com/posts/terraform-strategy-gitflow-vs-trunk-based/) <sub>June 4, 2025</sub>
+- [Modernizing Scheduled Tasks: Reliability, Scale, and Zero Maintenance](https://dortort.com/posts/building-serverless-cron-on-aws/) <sub>May 6, 2025</sub>
+- [How Serverless Shrinks PCI Scope](https://dortort.com/posts/serverless-pci-dss-scope-reduction/) <sub>April 3, 2025</sub>
+- [Terraform at Scale: Folders, Workspaces, or Services?](https://dortort.com/posts/structuring-terraform-for-multi-environment-microservice-architectures/) <sub>March 4, 2025</sub>
+- [Kubernetes vs. Proprietary Container Services: A Technical and Pragmatic Comparison](https://dortort.com/posts/kubernetes-vs-proprietary-container-services/) <sub>February 10, 2025</sub>
+- [Idempotent Dockerfiles: Desirable Ideal or Misplaced Objective?](https://dortort.com/posts/idempotent-dockerfiles/) <sub>January 15, 2025</sub>
+<!-- EARLIER_WRITING_END -->
 
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://ghchart.rshah.org/58a6ff/dortort">
-    <source media="(prefers-color-scheme: light)" srcset="https://ghchart.rshah.org/2f9e44/dortort">
-    <img alt="GitHub Contribution Grid" src="https://ghchart.rshah.org/2f9e44/dortort">
-  </picture>
-</p>
+</details>
+
+**[All articles at dortort.com](https://dortort.com)**
