@@ -6,52 +6,104 @@
 """Generate the animated SVGs the profile README embeds."""
 
 import io
+import urllib.parse
+import urllib.request
 from pathlib import Path
 
 import uharfbuzz as hb
+from fontTools.pens.boundsPen import BoundsPen
 from fontTools.pens.svgPathPen import SVGPathPen
 from fontTools.pens.transformPen import TransformPen
+from fontTools.svgLib.path import parse_path
 from fontTools.ttLib import TTFont
 from fontTools.varLib import instancer
 
 ROOT = Path(__file__).resolve().parent
 OUT = ROOT.parent / "assets"
-FONT = ROOT / "fonts" / "Anybody.ttf"
+FONT_CACHE = ROOT / ".fonts"
+FONT_SOURCE = "https://raw.githubusercontent.com/google/fonts/5bd87dfc525c8a0d1d8529d3684716e00c3fc59a/ofl"
+MONTSERRAT = "montserrat/Montserrat[wght].ttf"
+MERRIWEATHER_ITALIC = "merriweather/Merriweather-Italic[opsz,wdth,wght].ttf"
+INTER = "inter/Inter[opsz,wght].ttf"
+JETBRAINS_MONO = "jetbrainsmono/JetBrainsMono[wght].ttf"
+LATO_BOLD = "lato/Lato-Bold.ttf"
+WAWARDEN_WORDMARK = (ROOT / "brand" / "wawarden-wordmark.path").read_text().strip()
 
 W = 840
-SLAB = "#2338E8"
-THEMES = {
+PAD = 32
+
+SITE = {"navy": "#000080", "gold": "#C5B358", "slate": "#708090"}
+SITE_HEADING = {"light": "#000080", "dark": "#DBE5FF"}
+STACKORDER = {
     "light": {
-        "ink": "#1f2328",
-        "muted": "#59636e",
-        "line": "#d1d9e0",
-        "blue": "#2338E8",
-        "hold": "#E79A0C",
+        "bg": "#F4F1DE", "edge": "#D5D5C7", "ink": "#2F3E46", "on_ink": "#F4F1DE",
+        "accent": "#A4472F", "muted": "#626D6F", "line": "#B7BAB0",
     },
     "dark": {
-        "ink": "#f0f6fc",
-        "muted": "#9198a1",
-        "line": "#3d444d",
-        "blue": "#4D63FF",
-        "hold": "#F2B134",
+        "bg": "#1A2930", "edge": "#2F3E46", "ink": "#F4F1DE", "on_ink": "#1A2930",
+        "accent": "#F2A28A", "muted": "#B7BAB0", "line": "#48555A",
     },
 }
-ON_BLUE = "#ffffff"
-ON_HOLD = "#1f2328"
+WAWARDEN = {
+    "light": {
+        "bg": "#FFFFFF", "edge": "#DDE3E7", "ink": "#111B21", "muted": "#4A5A64",
+        "line": "#DDE3E7", "stop": "#667781",
+    },
+    "dark": {
+        "bg": "#111B21", "edge": "#2A3942", "ink": "#FFFFFF", "muted": "#AEBAC1",
+        "line": "#2A3942", "stop": "#AEBAC1",
+    },
+}
+WAWARDEN_GREEN = "#25D366"
+WAWARDEN_INK = "#111B21"
+CLAUDE = {
+    "light": {
+        "bg": "#FAF9F5", "edge": "#E8E6DC", "ink": "#141413", "muted": "#6B6A63",
+        "line": "#D1CFC5", "orange": "#D97757", "orange_text": "#B5502F",
+    },
+    "dark": {
+        "bg": "#1F1E1D", "edge": "#3D3D3A", "ink": "#FAF9F5", "muted": "#B0AEA5",
+        "line": "#52514C", "orange": "#D97757", "orange_text": "#E38B6D",
+    },
+}
+ACROSS = {
+    "light": {
+        "bg": "#F4F8F7", "edge": "#E3E8E6", "ink": "#1A1C1B", "muted": "#5C6A66",
+        "brand": "#0E7C66",
+    },
+    "dark": {
+        "bg": "#0B1727", "edge": "#1F3149", "ink": "#F2F5F7", "muted": "#9FB0BF",
+        "brand": "#5FD3A6",
+    },
+}
+ACROSS_TILE = "#232F3E"
+ACROSS_ORANGE = "#FF9900"
+
+
+def font_file(name: str) -> Path:
+    path = FONT_CACHE / name.split("/")[-1]
+    if not path.exists():
+        FONT_CACHE.mkdir(exist_ok=True)
+        urllib.request.urlretrieve(f"{FONT_SOURCE}/{urllib.parse.quote(name)}", path)
+    return path
 
 
 class Face:
-    def __init__(self, **axes: float) -> None:
-        self.font = instancer.instantiateVariableFont(
-            TTFont(FONT), axes, overlap=instancer.OverlapMode.REMOVE
-        )
+    def __init__(self, name: str, **axes: float) -> None:
+        self.font = TTFont(font_file(name))
+        if axes:
+            self.font = instancer.instantiateVariableFont(
+                self.font, axes, overlap=instancer.OverlapMode.REMOVE
+            )
         buf = io.BytesIO()
         self.font.save(buf)
         self.hb = hb.Font(hb.Face(buf.getvalue()))
         self.upm = self.font["head"].unitsPerEm
         self.glyphs = self.font.getGlyphSet()
 
-    def outlines(self, text: str, size: float, x: float, y: float) -> tuple[list[str], float]:
+    def outlines(
+        self, text: str, size: float, x: float, y: float, tracking: float = 0
+    ) -> tuple[list[str], float]:
         scale = size / self.upm
         buf = hb.Buffer()
         buf.add_str(text)
@@ -66,11 +118,11 @@ class Face:
             )
             if commands := pen.getCommands():
                 paths.append(commands)
-            cursor += pos.x_advance
-        return paths, cursor * scale
+            cursor += pos.x_advance + tracking * self.upm
+        return paths, (cursor - tracking * self.upm) * scale
 
-    def width(self, text: str, size: float) -> float:
-        return self.outlines(text, size, 0, 0)[1]
+    def width(self, text: str, size: float, tracking: float = 0) -> float:
+        return self.outlines(text, size, 0, 0, tracking)[1]
 
     def text(
         self,
@@ -81,13 +133,15 @@ class Face:
         fill: str,
         anchor: str = "start",
         cls: str = "",
+        tracking: float = 0,
+        opacity: float = 1,
     ) -> str:
         if anchor != "start":
-            width = self.width(text, size)
+            width = self.width(text, size, tracking)
             x -= width if anchor == "end" else width / 2
-        paths, _ = self.outlines(text, size, x, y)
-        attr = f' class="{cls}"' if cls else ""
-        return f'<path{attr} fill="{fill}" d="{"".join(paths)}"/>'
+        paths, _ = self.outlines(text, size, x, y, tracking)
+        attrs = (f' class="{cls}"' if cls else "") + (f' opacity="{opacity}"' if opacity != 1 else "")
+        return f'<path{attrs} fill="{fill}" d="{"".join(paths)}"/>'
 
 
 def num(value: float) -> str:
@@ -127,64 +181,108 @@ def svg(height: int, label: str, css: str, body: str) -> str:
     )
 
 
-def title(display: Face, text: str, theme: dict[str, str]) -> str:
-    return display.text(text, 38, 0, 40, theme["ink"])
+def card(height: int, theme: dict[str, str]) -> str:
+    return (
+        f'<rect x="0.5" y="0.5" width="{W - 1}" height="{height - 1}" rx="14" '
+        f'fill="{theme["bg"]}" stroke="{theme["edge"]}"/>'
+    )
 
 
-def hero(display: Face, label: Face) -> str:
-    duration, size, left = 14, 100, 44
+def hero(display: Face, serif: Face, label: Face) -> str:
+    duration, size, tracking = 14, 82, -0.02
     css = [
         ".g{fill:#fff;stroke:#fff;stroke-width:1.5;stroke-linejoin:round;"
         f"animation:apply {duration}s ease-in-out infinite backwards}}",
         "@keyframes apply{0%,6%{fill-opacity:0}8.5%,74%{fill-opacity:1}80%,100%{fill-opacity:0}}",
-        "@keyframes plan{0%,27.5%{opacity:.85}28.5%,74%{opacity:0}75%,100%{opacity:.85}}",
-        "@keyframes done{0%,27.5%{opacity:0}28.5%,74%{opacity:.85}75%,100%{opacity:0}}",
+        "@keyframes plan{0%,27.5%{opacity:1}28.5%,74%{opacity:0}75%,100%{opacity:1}}",
+        "@keyframes done{0%,27.5%{opacity:0}28.5%,74%{opacity:1}75%,100%{opacity:0}}",
         f".plan{{opacity:0;animation:plan {duration}s linear infinite}}",
-        f".done{{opacity:.85;animation:done {duration}s linear infinite}}",
+        f".done{{animation:done {duration}s linear infinite}}",
     ]
-    body = [f'<rect width="{W}" height="384" rx="14" fill="{SLAB}"/>']
+    body = [f'<rect width="{W}" height="400" rx="14" fill="{SITE["navy"]}"/>']
     index = 0
-    for row, word in enumerate(("Francis", "Eytan", "Dortort")):
-        paths, _ = display.outlines(word, size, left, 118 + row * 92)
+    for row, line in enumerate(("FRANCIS EYTAN", "DORTORT")):
+        x = (W - display.width(line, size, tracking)) / 2
+        paths, _ = display.outlines(line, size, x, 124 + row * 88, tracking)
         for path in paths:
             css.append(f".d{index}{{animation-delay:{index * 0.11 + row * 0.3:.2f}s}}")
             body.append(f'<path class="g d{index}" d="{path}"/>')
             index += 1
-    body.append(label.text(f"Plan: {index} to add, 0 to change, 0 to destroy.", 17, left, 348, "#fff", cls="plan"))
+    body.append(
+        serif.text(
+            "Senior DevSecOps Engineer & Cloud Solutions Architect",
+            23, W / 2, 262, "#fff", anchor="middle", opacity=0.9,
+        )
+    )
+    body.append(f'<rect x="{W / 2 - 1}" y="288" width="2" height="40" fill="{SITE["gold"]}"/>')
+    body.append(
+        label.text(
+            f"Plan: {index} to add, 0 to change, 0 to destroy.",
+            15, W / 2, 364, SITE["gold"], anchor="middle", cls="plan", tracking=0.04,
+        )
+    )
     body.append(
         label.text(
             f"Apply complete! Resources: {index} added, 0 changed, 0 destroyed.",
-            17, left, 348, "#fff", cls="done",
+            15, W / 2, 364, SITE["gold"], anchor="middle", cls="done", tracking=0.04,
         )
     )
-    return svg(384, "Francis Eytan Dortort", "".join(css), "".join(body))
+    label_text = "Francis Eytan Dortort, Senior DevSecOps Engineer and Cloud Solutions Architect"
+    return svg(400, label_text, "".join(css), "".join(body))
 
 
-def stackorder(display: Face, label: Face, theme: dict[str, str]) -> str:
-    duration, off = 12, 10.2
-    node_w, node_h = 176, 48
-    columns = (1, 332, 663)
-    rows = (98, 164)
+def section(display: Face, text: str, mode: str) -> str:
+    body = (
+        f'<rect y="0" width="{W}" height="1" fill="{SITE["slate"]}" opacity="0.35"/>'
+        f'<rect x="0" y="34" width="3" height="40" fill="{SITE["gold"]}"/>'
+        + display.text(text, 36, 20, 67, SITE_HEADING[mode], tracking=-0.01)
+    )
+    return svg(84, text, "", body)
+
+
+def stackorder(wordmark: Face, label: Face, mono: Face, theme: dict[str, str]) -> str:
+    duration, off, height = 12, 10.2, 284
+    node_w, node_h, cut = 176, 48, 9
+    columns = (PAD, 332, W - PAD - node_w)
+    rows = (132, 204)
     waves = (
         (0.8, (("staging/vpc", 0), ("prod/vpc", 1))),
         (2.3, (("staging/eks", 0), ("prod/eks", 1))),
         (3.8, (("prod/apps", 1),)),
     )
     edges = ((0, 0, 1.5), (0, 1, 1.5), (1, 1, 3.0))
-    css, body = [], [title(display, "Stackorder", theme)]
+    unit = 1.5
+    origin_x, origin_y = PAD - 4 * unit, 22 - 6 * unit
+    plates = f'transform="translate({origin_x} {origin_y}) scale({unit})"'
+    x_height = wordmark.font["OS/2"].sxHeight / wordmark.upm
+    css = []
+    body = [
+        card(height, theme),
+        f'<path {plates} fill="{theme["ink"]}" d="M6 6H24V8L22 10H4V8ZM6 22H24V24L22 26H4V24Z"/>',
+        f'<path {plates} fill="{theme["accent"]}" d="M10 14H28V16L26 18H8V16Z"/>',
+        wordmark.text(
+            "stackorder", 12 * unit / x_height, origin_x + 36 * unit, origin_y + 22 * unit, theme["ink"]
+        ),
+    ]
+
+    def plate(x: float, y: float) -> str:
+        return (
+            f"M{x + cut} {y}H{x + node_w}V{y + node_h - cut}L{x + node_w - cut} {y + node_h}"
+            f"H{x}V{y + cut}Z"
+        )
+
     for wave, (start, nodes) in enumerate(waves):
         x = columns[wave]
         css.append(window(f"w{wave}", duration, start, off))
-        body.append(label.text(f"wave {wave}", 14, x, 82, theme["muted"]))
+        body.append(label.text(f"wave {wave}", 14, x, 116, theme["muted"]))
         for name, row in nodes:
             y = rows[row]
             body.append(
-                f'<rect x="{x}" y="{y}" width="{node_w}" height="{node_h}" rx="5" '
-                f'fill="none" stroke="{theme["line"]}" stroke-width="2"/>'
-                + label.text(name, 16, x + 16, y + 30, theme["muted"])
-                + f'<g class="w{wave}"><rect x="{x - 1}" y="{y - 1}" width="{node_w + 2}" '
-                f'height="{node_h + 2}" rx="6" fill="{theme["blue"]}"/>'
-                + label.text(name, 16, x + 16, y + 30, ON_BLUE)
+                f'<path d="{plate(x, y)}" fill="none" stroke="{theme["line"]}" stroke-width="2"/>'
+                + mono.text(name, 15, x + 18, y + 30, theme["muted"])
+                + f'<g class="w{wave}"><path d="{plate(x, y)}" fill="{theme["ink"]}" '
+                f'stroke="{theme["ink"]}" stroke-width="2"/>'
+                + mono.text(name, 15, x + 18, y + 30, theme["on_ink"])
                 + "</g>"
             )
     for index, (wave, row, start) in enumerate(edges):
@@ -193,135 +291,156 @@ def stackorder(display: Face, label: Face, theme: dict[str, str]) -> str:
         css.append(draw(f"e{index}", duration, x2 - x1, start, start + 0.8, off))
         body.append(
             f'<path d="M{x1} {y}H{x2}" stroke="{theme["line"]}" stroke-width="2"/>'
-            f'<path class="e{index}" d="M{x1} {y}H{x2}" stroke="{theme["blue"]}" stroke-width="2"/>'
+            f'<path class="e{index}" d="M{x1} {y}H{x2}" stroke="{theme["accent"]}" stroke-width="3"/>'
         )
     label_text = "Stackorder: five stacks applied in three dependency waves"
-    return svg(234, label_text, "".join(css), "".join(body))
+    return svg(height, label_text, "".join(css), "".join(body))
 
 
-def wawarden(display: Face, label: Face, theme: dict[str, str]) -> str:
-    duration = 5.6
-    lanes = ((100, "Work", False), (140, "Family", True), (180, "School parents", True), (220, "Bank alerts", False))
-    pill_w, gate_x, agent_x, agent_y = 168, 440, 680, 160
+def wawarden(label: Face, strong: Face, theme: dict[str, str]) -> str:
+    duration, height = 5.6, 292
+    lanes = ((128, "Work", False), (168, "Family", True), (208, "School parents", True), (248, "Bank alerts", False))
+    pill_w, gate_x, agent_x, agent_y = 176, 456, 652, 188
+    start_x = PAD + pill_w + 14
+    travel = gate_x - start_x
+    reach = agent_x - 10 - start_x
+    bounds = BoundsPen(None)
+    parse_path(WAWARDEN_WORDMARK, bounds)
+    left, top, _, bottom = bounds.bounds
+    scale = 30 / (bottom - top)
     css = [
         f".m{{opacity:0;animation-duration:{duration}s;animation-timing-function:linear;"
         "animation-iteration-count:infinite}",
         f"@keyframes stop{{0%{{opacity:0;transform:translate(0,0);fill:{theme['ink']}}}"
-        f"6%{{opacity:1}}44%{{transform:translate(248px,0);fill:{theme['ink']}}}"
-        f"52%{{fill:{theme['hold']}}}74%{{opacity:1}}"
-        f"86%,100%{{opacity:0;transform:translate(248px,0);fill:{theme['hold']}}}}}",
+        f"6%{{opacity:1}}44%{{transform:translate({travel - 20}px,0);fill:{theme['ink']}}}"
+        f"52%{{fill:{theme['stop']}}}70%{{opacity:.55}}"
+        f"84%,100%{{opacity:0;transform:translate({travel - 20}px,0);fill:{theme['stop']}}}}}",
         ".stop{animation-name:stop}",
     ]
     body = [
-        title(display, "WaWarden", theme),
-        label.text("allowlist", 14, gate_x, 70, theme["muted"], anchor="middle"),
+        card(height, theme),
+        f'<polyline transform="translate({PAD - 3.4} 21) scale(3.8)" points="1,5 3,9 6,3 8,7 11,1" fill="none" '
+        f'stroke="{WAWARDEN_GREEN}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>',
+        f'<path transform="translate({num(PAD + 54 - left * scale)} {num(26 - top * scale)}) scale({scale:.4f})" '
+        f'fill="{theme["ink"]}" d="{WAWARDEN_WORDMARK}"/>',
+        label.text("allowlist", 14, gate_x, 98, theme["muted"], anchor="middle"),
     ]
-    gate = []
-    cursor = 82
+    gate, cursor = [], 110
     for index, (y, name, allowed) in enumerate(lanes):
         dy = agent_y - y
         body.append(
-            f'<rect x="1" y="{y - 15}" width="{pill_w}" height="30" rx="15" fill="none" '
+            f'<rect x="{PAD}" y="{y - 15}" width="{pill_w}" height="30" rx="15" fill="none" '
             f'stroke="{theme["line"]}" stroke-width="2"/>'
-            + label.text(name, 15, 16, y + 5, theme["ink"])
-            + f'<path d="M{pill_w + 11} {y}H{gate_x - 12}" stroke="{theme["line"]}" stroke-width="2"/>'
+            + label.text(name, 15, PAD + 16, y + 5, theme["ink"])
+            + f'<path d="M{start_x - 3} {y}H{gate_x - 12}" stroke="{theme["line"]}" stroke-width="2"/>'
         )
         if allowed:
             gate.append(f"M{gate_x} {cursor}V{y - 13}")
             cursor = y + 13
             css.append(
                 f"@keyframes pass{index}{{0%{{opacity:0;transform:translate(0,0);fill:{theme['ink']}}}"
-                f"6%{{opacity:1}}44%{{transform:translate(260px,0);fill:{theme['ink']}}}"
-                f"48%{{fill:{theme['blue']}}}"
-                f"88%{{opacity:1;transform:translate(488px,{dy}px)}}"
-                f"94%,100%{{opacity:0;transform:translate(488px,{dy}px);fill:{theme['blue']}}}}}"
+                f"6%{{opacity:1}}44%{{transform:translate({travel}px,0);fill:{theme['ink']}}}"
+                f"48%{{fill:{WAWARDEN_GREEN}}}"
+                f"88%{{opacity:1;transform:translate({reach}px,{dy}px)}}"
+                f"94%,100%{{opacity:0;transform:translate({reach}px,{dy}px);fill:{WAWARDEN_GREEN}}}}}"
                 f".pass{index}{{animation-name:pass{index}}}"
             )
             body.append(
                 f'<path d="M{gate_x + 12} {y}L{agent_x - 10} {agent_y}" '
-                f'stroke="{theme["blue"]}" stroke-width="2"/>'
+                f'stroke="{WAWARDEN_GREEN}" stroke-width="2"/>'
             )
             name_cls = f"pass{index}"
         else:
-            body.append(
-                f'<rect x="{gate_x - 10}" y="{y - 9}" width="5" height="18" rx="2" fill="{theme["hold"]}"/>'
-            )
             name_cls = "stop"
         css.append(f".l{index}{{animation-delay:{index * 1.4:.1f}s}}")
-        body.append(f'<circle class="m {name_cls} l{index}" cx="{pill_w + 14}" cy="{y}" r="6"/>')
-    gate.append(f"M{gate_x} {cursor}V238")
+        body.append(f'<circle class="m {name_cls} l{index}" cx="{start_x}" cy="{y}" r="6"/>')
+    gate.append(f"M{gate_x} {cursor}V266")
     body.append(
         f'<path d="{"".join(gate)}" stroke="{theme["ink"]}" stroke-width="3" stroke-linecap="round"/>'
-        f'<rect x="{agent_x}" y="{agent_y - 20}" width="{W - agent_x}" height="40" rx="20" fill="{theme["blue"]}"/>'
-        + label.text("Your agent", 16, (agent_x + W) / 2, agent_y + 6, ON_BLUE, anchor="middle")
+        f'<rect x="{agent_x}" y="{agent_y - 21}" width="{W - PAD - agent_x}" height="42" rx="21" '
+        f'fill="{WAWARDEN_GREEN}"/>'
+        + strong.text("Your agent", 16, (agent_x + W - PAD) / 2, agent_y + 6, WAWARDEN_INK, anchor="middle")
     )
     label_text = "WaWarden: messages from allowlisted chats reach your agent, the rest stop at the gate"
-    return svg(258, label_text, "".join(css), "".join(body))
+    return svg(height, label_text, "".join(css), "".join(body))
 
 
-def taintguard(display: Face, label: Face, theme: dict[str, str]) -> str:
-    duration, off = 12, 10.4
-    chip_w, chip_h, y = 170, 46, 136
-    xs = (1, 224, 447, 669)
-    calls = (("Edit", 0.6, None), ("Read .env", 1.8, None), ("WebFetch", 3.3, 3.9), ("Bash", 4.9, 5.5))
-    css, body = [], [title(display, "TaintGuard", theme)]
-    for index in range(3):
-        x1, x2 = xs[index] + chip_w + 8, xs[index + 1] - 8
-        tainted = index > 0
-        start = (1.2, 2.7, 4.3)[index]
-        css.append(draw(f"s{index}", duration, x2 - x1, start, start + 0.5, off))
-        body.append(
-            f'<path d="M{x1} {y}H{x2}" stroke="{theme["line"]}" stroke-width="2"/>'
-            f'<path class="s{index}" d="M{x1} {y}H{x2}" '
-            f'stroke="{theme["hold"] if tainted else theme["blue"]}" stroke-width="{4 if tainted else 2}"/>'
-        )
-    for index, (name, shown, refused) in enumerate(calls):
-        x, top = xs[index], y - chip_h / 2
-        center = x + chip_w / 2
-        css.append(window(f"c{index}", duration, shown, off))
-        if refused is None:
+def taintguard(mono: Face, bold: Face, theme: dict[str, str]) -> str:
+    duration, off, height = 13, 11.2, 338
+    size, left, pitch, first = 15, PAD, 27, 106
+    css = [
+        "@keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}",
+        ".caret{animation:blink 1.1s steps(1) infinite}",
+    ]
+    spark = "".join(
+        f'<path d="M0 -11V11" transform="translate({left + 12} 43) rotate({angle})" '
+        f'stroke="{theme["orange"]}" stroke-width="3.4" stroke-linecap="round"/>'
+        for angle in (0, 45, 90, 135)
+    )
+    body = [
+        card(height, theme),
+        spark,
+        bold.text("TaintGuard", 27, left + 36, 53, theme["ink"]),
+        mono.text("a Claude Code mod", 14, W - PAD, 51, theme["muted"], anchor="end"),
+    ]
+    steps = (
+        ("call", "Edit(src/deploy.ts)", 0.6, None),
+        ("call", "Read(.env)", 1.6, None),
+        ("call", "WebFetch(https://…)", 3.4, 4.0),
+        ("note", "Refused: this session carries secret", 4.0, None),
+        ("call", "Bash(curl …)", 5.2, 5.8),
+        ("note", "Refused: this session carries secret", 5.8, None),
+    )
+    for index, (kind, text, shown, refused) in enumerate(steps):
+        y = first + index * pitch
+        css.append(window(f"t{index}", duration, shown, off, 0.3))
+        if kind == "note":
             body.append(
-                f'<g class="c{index}"><rect x="{x}" y="{top}" width="{chip_w}" height="{chip_h}" rx="5" '
-                f'fill="{theme["blue"]}"/>'
-                + label.text(name, 16, center, y + 6, ON_BLUE, anchor="middle")
+                f'<g class="t{index}"><path d="M{left + 22} {y - 13}v8h9" fill="none" '
+                f'stroke="{theme["muted"]}" stroke-width="1.6"/>'
+                + mono.text(text, size, left + 42, y, theme["orange_text"])
                 + "</g>"
             )
             continue
-        css.append(window(f"r{index}", duration, refused, off))
-        body.append(
-            f'<g class="c{index}"><rect x="{x}" y="{top}" width="{chip_w}" height="{chip_h}" rx="5" '
-            f'fill="none" stroke="{theme["line"]}" stroke-width="2"/>'
-            + label.text(name, 16, center, y + 6, theme["ink"], anchor="middle")
-            + f'<g class="r{index}"><rect x="{x}" y="{top}" width="{chip_w}" height="{chip_h}" rx="5" '
-            f'fill="none" stroke="{theme["hold"]}" stroke-width="3"/>'
-            + label.text("refused", 14, center, y + 50, theme["muted"], anchor="middle")
-            + "</g></g>"
-        )
-    tag_x = xs[1] + chip_w / 2
-    tag_w = label.width("secret", 14) + 24
-    css.append(window("tag", duration, 2.4, off))
+        dot = f'<circle cx="{left + 6}" cy="{y - 5}" r="5" fill="{theme["ink"]}"/>'
+        if refused is not None:
+            css.append(window(f"x{index}", duration, refused, off, 0.3))
+            dot += f'<circle class="x{index}" cx="{left + 6}" cy="{y - 5}" r="5" fill="{theme["orange"]}"/>'
+        body.append(f'<g class="t{index}">{dot}' + bold.text(text, size, left + 22, y, theme["ink"]) + "</g>")
+    tag_x = left + 22 + bold.width("Read(.env)", size) + 16
+    tag_y = first + pitch
+    tag_w = mono.width("+ secret", 13) + 20
+    css.append(window("tag", duration, 2.3, off))
+    band_y = first + len(steps) * pitch + 8
     body.append(
-        f'<g class="tag"><path d="M{tag_x} {y - chip_h / 2 - 12}v8" stroke="{theme["hold"]}" stroke-width="3"/>'
-        f'<rect x="{num(tag_x - tag_w / 2)}" y="{y - chip_h / 2 - 38}" width="{num(tag_w)}" height="26" rx="13" '
-        f'fill="{theme["hold"]}"/>'
-        + label.text("secret", 14, tag_x, y - chip_h / 2 - 20, ON_HOLD, anchor="middle")
+        f'<g class="tag"><rect x="{num(tag_x)}" y="{tag_y - 18}" width="{num(tag_w)}" height="24" rx="12" '
+        f'fill="{theme["orange"]}"/>'
+        + mono.text("+ secret", 13, tag_x + 10, tag_y - 1, "#141413")
+        + mono.text("TaintGuard · tainted: secret", 14, left + 2, band_y, theme["orange_text"])
         + "</g>"
     )
+    box_y = band_y + 12
+    body.append(
+        f'<rect x="{left}" y="{box_y}" width="{W - 2 * PAD}" height="40" rx="8" fill="none" '
+        f'stroke="{theme["line"]}" stroke-width="1.5"/>'
+        + mono.text(">", 15, left + 14, box_y + 25, theme["muted"])
+        + f'<rect class="caret" x="{left + 34}" y="{box_y + 11}" width="9" height="18" fill="{theme["ink"]}"/>'
+    )
     label_text = (
-        "TaintGuard: after a session reads an .env file it carries the label secret, "
+        "TaintGuard in a Claude Code session: after Read(.env) the session carries the label secret, "
         "and WebFetch and Bash are refused"
     )
-    return svg(212, label_text, "".join(css), "".join(body))
+    return svg(height, label_text, "".join(css), "".join(body))
 
 
-def across_amazon(display: Face, label: Face, theme: dict[str, str]) -> str:
-    duration, off = 12, 10.4
-    bar_x, bar_h, pitch, top = 150, 22, 38, 88
+def across_amazon(label: Face, strong: Face, theme: dict[str, str]) -> str:
+    duration, off, height = 12, 10.4, 284
+    bar_x, bar_h, pitch, top = PAD + 136, 22, 38, 124
     stores = (
-        ("amazon.com", (470, 60, 90)),
-        ("amazon.de", (400, 50, 60)),
-        ("amazon.co.uk", (450, 80, 110)),
-        ("amazon.co.jp", (420, 70, 80)),
+        ("amazon.com", (450, 55, 85)),
+        ("amazon.de", (360, 45, 55)),
+        ("amazon.co.uk", (430, 76, 104)),
+        ("amazon.co.jp", (400, 66, 76)),
     )
     tones = (0.55, 0.32, 0.16)
     ranked = sorted(range(len(stores)), key=lambda i: sum(stores[i][1]))
@@ -330,14 +449,23 @@ def across_amazon(display: Face, label: Face, theme: dict[str, str]) -> str:
         f"@keyframes lose{{0%,{pct(4.3, duration)}{{opacity:1}}{pct(4.75, duration)},100%{{opacity:0}}}}"
         f".lose{{opacity:0;animation:lose {duration}s ease-out infinite}}",
     ]
-    body = [title(display, "Across Amazon", theme)]
-    x = W
+    tile = (
+        f'<g transform="translate({PAD} 20)"><rect width="46" height="46" rx="10" fill="{ACROSS_TILE}"/>'
+        '<g fill="none" stroke="#fff" stroke-width="2.2">'
+        '<circle cx="23" cy="21" r="12.5"/><ellipse cx="23" cy="21" rx="5.6" ry="12.5"/>'
+        '<path d="M10.5 21h25M12.6 14.6h20.8M12.6 27.4h20.8"/></g>'
+        f'<path d="M6.5 27.5c10 7.4 22.5 7.2 33-.6" fill="none" stroke="{ACROSS_ORANGE}" '
+        'stroke-width="3.6" stroke-linecap="round"/>'
+        f'<path d="M34.2 23.6l7.3.4-2.800 6.700z" fill="{ACROSS_ORANGE}"/></g>'
+    )
+    body = [card(height, theme), tile, strong.text("Across Amazon", 27, PAD + 60, 53, theme["ink"], tracking=-0.01)]
+    x = W - PAD
     for name, tone in reversed(list(zip(("item", "shipping", "import fees"), tones))):
         x -= label.width(name, 14)
-        body.append(label.text(name, 14, x, 36, theme["muted"]))
+        body.append(label.text(name, 14, x, 49, theme["muted"]))
         x -= 20
-        body.append(f'<rect x="{num(x)}" y="24" width="13" height="13" rx="2" fill="{theme["ink"]}" opacity="{tone}"/>')
-        x -= 20
+        body.append(f'<rect x="{num(x)}" y="37" width="13" height="13" rx="2" fill="{theme["ink"]}" opacity="{tone}"/>')
+        x -= 18
     for index, (name, parts) in enumerate(stores):
         rank = ranked.index(index)
         y = top + rank * pitch
@@ -356,50 +484,45 @@ def across_amazon(display: Face, label: Face, theme: dict[str, str]) -> str:
         )
         segments, winner, cursor = [], [], 0
         for part, tone in zip(parts, tones):
-            rect = f'<rect x="{cursor}" y="{-bar_h / 2}" width="{part - 2}" height="{bar_h}" rx="2" '
+            rect = f'<rect x="{cursor}" y="{-bar_h / 2}" width="{part - 2}" height="{bar_h}" rx="3" '
             segments.append(rect + f'fill="{theme["ink"]}" opacity="{tone}"/>')
-            winner.append(rect + f'fill="{theme["blue"]}" opacity="{min(1.0, tone + 0.45):.2f}"/>')
+            winner.append(rect + f'fill="{theme["brand"]}" opacity="{min(1.0, tone + 0.45):.2f}"/>')
             cursor += part
         best, lose = "", ""
         if rank == 0:
             lose = ' class="lose"'
             best = (
                 f'<g class="win">{"".join(winner)}'
-                + label.text("lowest delivered total", 14, cursor + 10, 5, theme["blue"])
+                + strong.text("lowest delivered total", 14, cursor + 10, 5, theme["brand"])
                 + "</g>"
             )
         body.append(
             f'<g class="row{index}">'
-            + label.text(name, 15, 0, y + 5, theme["ink"])
+            + label.text(name, 15, PAD, y + 5, theme["ink"])
             + f'<g transform="translate({bar_x} {y})"><g class="bar{index}"><g{lose}>{"".join(segments)}</g></g>{best}</g></g>'
         )
     label_text = "Across Amazon: four Amazon stores ranked by item, shipping and import fees, lowest delivered total first"
-    return svg(234, label_text, "".join(css), "".join(body))
-
-
-def writing(display: Face, theme: dict[str, str]) -> str:
-    width = display.width("Writing", 38)
-    css = (
-        "@keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}"
-        ".caret{animation:blink 1.1s steps(1) infinite}"
-    )
-    body = title(display, "Writing", theme) + (
-        f'<rect class="caret" x="{num(width + 10)}" y="10" width="7" height="32" fill="{theme["blue"]}"/>'
-    )
-    return svg(52, "Writing", css, body)
+    return svg(height, label_text, "".join(css), "".join(body))
 
 
 def main() -> None:
-    display = Face(wdth=150, wght=900)
-    label = Face(wdth=100, wght=500)
+    montserrat_bold = Face(MONTSERRAT, wght=700)
+    montserrat_semibold = Face(MONTSERRAT, wght=600)
+    merriweather = Face(MERRIWEATHER_ITALIC, opsz=24, wdth=100, wght=300)
+    inter = Face(INTER, opsz=14, wght=500)
+    inter_strong = Face(INTER, opsz=24, wght=650)
+    mono = Face(JETBRAINS_MONO, wght=500)
+    mono_bold = Face(JETBRAINS_MONO, wght=700)
+    lato = Face(LATO_BOLD)
     OUT.mkdir(exist_ok=True)
-    (OUT / "hero.svg").write_text(hero(display, label))
-    for mode, theme in THEMES.items():
-        (OUT / f"stackorder-{mode}.svg").write_text(stackorder(display, label, theme))
-        (OUT / f"wawarden-{mode}.svg").write_text(wawarden(display, label, theme))
-        (OUT / f"taintguard-{mode}.svg").write_text(taintguard(display, label, theme))
-        (OUT / f"across-amazon-{mode}.svg").write_text(across_amazon(display, label, theme))
-        (OUT / f"writing-{mode}.svg").write_text(writing(display, theme))
+    (OUT / "hero.svg").write_text(hero(montserrat_bold, merriweather, montserrat_semibold))
+    for mode in ("light", "dark"):
+        (OUT / f"section-open-source-{mode}.svg").write_text(section(montserrat_bold, "Open source", mode))
+        (OUT / f"section-writing-{mode}.svg").write_text(section(montserrat_bold, "Writing", mode))
+        (OUT / f"stackorder-{mode}.svg").write_text(stackorder(lato, inter, mono, STACKORDER[mode]))
+        (OUT / f"wawarden-{mode}.svg").write_text(wawarden(inter, inter_strong, WAWARDEN[mode]))
+        (OUT / f"taintguard-{mode}.svg").write_text(taintguard(mono, mono_bold, CLAUDE[mode]))
+        (OUT / f"across-amazon-{mode}.svg").write_text(across_amazon(inter, inter_strong, ACROSS[mode]))
 
 
 if __name__ == "__main__":
