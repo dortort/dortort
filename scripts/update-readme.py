@@ -145,8 +145,7 @@ def update_readme(projects: str, latest: str, earlier: str) -> None:
             rf"({re.escape(start_tag)}\n).*?(\n{re.escape(end_tag)})",
             re.DOTALL,
         )
-        replacement = rf"\g<1>{content}\g<2>" if content else rf"\g<1>\g<2>"
-        text = pattern.sub(replacement, text)
+        text = pattern.sub(lambda m, c=content: f"{m.group(1)}{c}{m.group(2)}", text)
 
     README.write_text(text)
 
