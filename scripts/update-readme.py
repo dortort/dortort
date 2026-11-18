@@ -10,6 +10,9 @@ from pathlib import Path
 README = Path("README.md")
 POST_DIRS = ("_posts", "content/posts", "content/post", "src/posts", "posts")
 PROJECT_ACTIVITY_WINDOW_DAYS = 183
+FEATURED_REPOS = ("wawarden", "claude-plugins", "across-amazon")
+HIDDEN_REPOS = ("dortort", "dortort.github.io", "homebrew-tap", *FEATURED_REPOS)
+LATEST_POST_COUNT = 6
 DATE_RE = re.compile(r"^(\d{4}-\d{2}-\d{2})")
 SLUG_DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}-")
 TITLE_RE = re.compile(r"^title:\s*(.*)")
@@ -22,6 +25,7 @@ def fetch_projects() -> str:
     ).strftime(
         "%Y-%m-%dT%H:%M:%SZ"
     )
+    hidden = "".join(f' and .name != "{name}"' for name in HIDDEN_REPOS)
     result = subprocess.run(
         [
             "gh", "api",
@@ -32,9 +36,7 @@ def fetch_projects() -> str:
             f'.private == false'
             f' and .fork == false'
             f' and .pushed_at > "{cutoff}"'
-            f' and .name != "dortort"'
-            f' and .name != "dortort.github.io"'
-            f' and .name != "homebrew-tap"'
+            f'{hidden}'
             f') | [.name, .html_url, (.description // "")] | @tsv',
         ],
         capture_output=True, text=True, check=True,
@@ -73,7 +75,12 @@ def parse_frontmatter(path: Path) -> tuple[str | None, str | None]:
     return title, date_val
 
 
-def fetch_posts() -> str:
+def format_post(date_val: str, title: str, url: str) -> str:
+    published = datetime.strptime(date_val, "%Y-%m-%d")
+    return f"- [{title}]({url})<br><sub>{published:%B} {published.day}, {published.year}</sub>"
+
+
+def fetch_posts() -> tuple[str, str]:
     with tempfile.TemporaryDirectory() as tmpdir:
         blog_dir = Path(tmpdir)
         subprocess.run(
@@ -105,15 +112,19 @@ def fetch_posts() -> str:
                 posts.append((date_val, title, url))
 
         posts.sort(key=lambda p: p[0], reverse=True)
-        lines = [f"- {d} — [{t}]({u})" for d, t, u in posts[:15]]
-        return "\n".join(lines)
+        lines = [format_post(*post) for post in posts]
+        return (
+            "\n".join(lines[:LATEST_POST_COUNT]),
+            "\n".join(lines[LATEST_POST_COUNT:]),
+        )
 
 
-def update_readme(projects: str, writing: str) -> None:
+def update_readme(projects: str, latest: str, earlier: str) -> None:
     text = README.read_text()
     sections = {
         ("<!-- CURRENT_PROJECTS_START -->", "<!-- CURRENT_PROJECTS_END -->"): projects,
-        ("<!-- LATEST_WRITING_START -->", "<!-- LATEST_WRITING_END -->"): writing,
+        ("<!-- LATEST_WRITING_START -->", "<!-- LATEST_WRITING_END -->"): latest,
+        ("<!-- EARLIER_WRITING_START -->", "<!-- EARLIER_WRITING_END -->"): earlier,
     }
     for (start_tag, end_tag), content in sections.items():
         pattern = re.compile(
@@ -128,8 +139,8 @@ def update_readme(projects: str, writing: str) -> None:
 
 def main() -> None:
     projects = fetch_projects()
-    writing = fetch_posts()
-    update_readme(projects, writing)
+    latest, earlier = fetch_posts()
+    update_readme(projects, latest, earlier)
     print("README updated successfully.")
 
 
